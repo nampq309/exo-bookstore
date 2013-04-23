@@ -14,26 +14,21 @@
 * You should have received a copy of the GNU General Public License
 * along with this program; if not, see<http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.bookstore;
+package org.exoplatform.bookstore.webui;
 
-import org.exoplatform.bookstore.webui.UIBookstoreContainer;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
-import org.exoplatform.webui.core.UIPortletApplication;
-import org.exoplatform.webui.core.lifecycle.UIApplicationLifecycle;
-
+import org.exoplatform.webui.config.annotation.EventConfig;
+import org.exoplatform.webui.core.lifecycle.UIFormLifecycle;
+import org.exoplatform.webui.event.Event.Phase;
 
 @ComponentConfig(
- lifecycle = UIApplicationLifecycle.class,
- template = "app:/groovy/webui/portlet/BookStoreMainPortlet.gtmpl"
+ lifecycle = UIFormLifecycle.class,
+ template = "app:/groovy/webui/component/UIBookList.gtmpl",
+ events = {
+   @EventConfig(listeners = UIBookList.EditActionListener.class, phase = Phase.DECODE),
+   @EventConfig(listeners = UIBookList.SaveActionListener.class)
+ }
 )
-public class BookStoreMainPortlet extends UIPortletApplication {
-  
-  /**
-   * Constructor of Main Portlet
-   * @throws Exception
-   */
-  public BookStoreMainPortlet() throws Exception {
-    addChild(UIBookstoreContainer.class, null, null);
-  }
+public class UIBookList extends BookstoreForm {
 
 }
