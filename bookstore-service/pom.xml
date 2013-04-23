@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>bookstore-service</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0.0</version>
+  <name>BookstoreService</name>
+  <description>Bookstore Portlet</description>
+  
+    <properties>
+	<project.version>0.2-SNAPSHOT</project.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <org.exoplatform.core.verion>3.5.3.Final</org.exoplatform.core.verion>
+    <org.exoplatform.kernel.version>2.3.0-CR2</org.exoplatform.kernel.version>
+    <org.exoplatform.ws.version>2.2.0-CR2</org.exoplatform.ws.version>
+    <org.exoplatform.portal.version>3.2.1-PLF-SNAPSHOT</org.exoplatform.portal.version>
+    <org.chromattic.version>1.1.0-beta6</org.chromattic.version>
+    <org.chromattic.ext.version>1.1.1</org.chromattic.ext.version>
+    <org.hsqldb.version>1.8.0.10</org.hsqldb.version>
+    <org.exoplatform.jcr.version>1.14.0-CR2</org.exoplatform.jcr.version>
+    <junit.version>3.8.1</junit.version>
+    <org.slf4j.version>1.5.8</org.slf4j.version>
+    <javax.servlet.version>2.5</javax.servlet.version>
+    <javax.portlet.version>2.0</javax.portlet.version>
+    <commons-lang.version>2.6</commons-lang.version>
+    <org.gatein.shindig.version>2.0.2-Beta03</org.gatein.shindig.version>
+    <org.exoplatform.commons.version>1.1.4-SNAPSHOT</org.exoplatform.commons.version>
+    <org.exoplatform.social.version>1.2.5-SNAPSHOT</org.exoplatform.social.version>
+    <org.gatein.common.version>2.0.4-GA</org.gatein.common.version>
+  </properties>
+  
+  <dependencies>
+	
+	<dependency>
+      <groupId>org.exoplatform.core</groupId>
+      <artifactId>exo.core.component.organization.api</artifactId>
+      <version>${org.exoplatform.core.verion}</version>
+      <scope>provided</scope>
+    </dependency>
+    
+     <dependency>
+      <groupId>org.exoplatform.core</groupId>
+      <artifactId>exo.core.component.organization.jdbc</artifactId>
+      <version>${org.exoplatform.core.verion}</version>
+      <scope>provided</scope>
+    </dependency>
+  
+    <dependency>
+      <groupId>org.exoplatform.core</groupId>
+      <artifactId>exo.core.component.security.core</artifactId>
+      <version>${org.exoplatform.core.verion}</version>
+      <scope>provided</scope>
+    </dependency>
+	
+	<!--Chromattic-->
+	<dependency>
+      <groupId>org.chromattic</groupId>
+      <artifactId>chromattic.api</artifactId>
+      <version>${org.chromattic.version}</version>
+      <scope>provided</scope>
+    </dependency>
+ 
+    <dependency>
+      <groupId>org.chromattic</groupId>
+      <artifactId>chromattic.core</artifactId>
+      <version>${org.chromattic.version}</version>
+      <scope>provided</scope>
+    </dependency>
+ 
+    <dependency>
+      <groupId>org.chromattic</groupId>
+      <artifactId>chromattic.metamodel</artifactId>
+      <version>${org.chromattic.version}</version>
+      <scope>provided</scope>
+    </dependency>
+ 
+    <dependency>
+      <groupId>org.chromattic</groupId>
+      <artifactId>chromattic.apt</artifactId>
+      <version>${org.chromattic.version}</version>
+      <scope>provided</scope>
+    </dependency>
+ 
+    <dependency>
+      <groupId>org.chromattic</groupId>
+      <artifactId>chromattic.spi</artifactId>
+      <version>${org.chromattic.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.chromattic</groupId>
+      <artifactId>chromattic.exo</artifactId>
+      <version>${org.chromattic.version}</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.chromattic</groupId>
+      <artifactId>chromattic.ext</artifactId>
+      <version>${org.chromattic.ext.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    
+  </dependencies>
+	<build>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.xml</include>
+          <include>**/*.conf</include>
+        </includes>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
