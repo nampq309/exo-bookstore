@@ -1,1 +1,33 @@
-<div><% uicomponent.renderChildren(); %></div>
+<%
+import org.exoplatform.webui.core.UIPopupWindow;
+
+  def bookList = uicomponent.getBookList();
+  
+%>  
+
+<h1><center>Welcome to eXo Bookstore Portlet</center></h1>
+
+<table border="1">
+<tr>
+<td>Category</td>
+<td>Title</td>
+<td>ISBN</td>
+<td>Publisher</td>
+</tr>
+
+    <%
+        for(book in bookList) {
+            %>
+            <tr>
+                <div class="Book">
+                    <td> <%= book.getCategory() %></td>
+                    <td> <%= book.getTitle() %></td>
+                    <td> <%= book.getIsbn() %></td>
+                    <td> <%= book.getPublisher() %></td>
+                </div>
+            </tr>
+            <%
+        }
+    %>
+    
+</table>

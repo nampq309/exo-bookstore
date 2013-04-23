@@ -16,6 +16,10 @@
  */
 package org.exoplatform.bookstore.webui;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.exoplatform.bookstore.model.Book;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.lifecycle.UIFormLifecycle;
@@ -30,5 +34,21 @@ import org.exoplatform.webui.event.Event.Phase;
  }
 )
 public class UIBookList extends BookstoreForm {
+  
+  public UIBookList() throws Exception {
+    
+  }
+  
+  public static List<Book> bookList = new ArrayList<Book>();
+  
+  public static List<Book> getBookList() {
+    //SET META DATA
+    if(bookList.size() == 0){
+      bookList.add(new Book("id1", "Story", "ISBN XXX", "Story 1", "NXB Tuoi tre"));
+      bookList.add(new Book("id2", "Story", "ISBN YYY", "Story 2", "NXB Tuoi tre"));
+      bookList.add(new Book("id3", "Story", "ISBN ZZZ", "Story 3", "NXB Tuoi tre"));
+    }
+    return bookList;
+  }
 
 }

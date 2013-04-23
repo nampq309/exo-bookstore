@@ -29,7 +29,7 @@ public class UIBookstoreContainer extends UIContainer {
    * @throws Exception
    */
   public UIBookstoreContainer() throws Exception {
-    
+    addChild(UIBookList.class, null, null);
   }
 
 }
