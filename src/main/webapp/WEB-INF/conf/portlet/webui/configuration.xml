@@ -2,7 +2,7 @@
 <webui-configuration>   
 
   <application>     
-    <ui-component-root>org.exoplatform.webui.examples.WebUIPortletExample</ui-component-root>
+    <ui-component-root>org.exoplatform.bookstore.BookStoreMainPortlet</ui-component-root>
     <state-manager>org.exoplatform.webui.application.portlet.ParentAppStateManager</state-manager>
   </application>
 

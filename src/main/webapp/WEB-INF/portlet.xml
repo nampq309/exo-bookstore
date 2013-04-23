@@ -7,9 +7,9 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"> 
 
   <portlet>
-    <description xml:lang="EN">Portlet WebUI</description>
-    <portlet-name>MyWebUI</portlet-name>
-    <display-name xml:lang="EN">Portlet WebUI</display-name>
+    <description xml:lang="EN">Bookstore Portlet</description>
+    <portlet-name>BookStore</portlet-name>
+    <display-name xml:lang="EN">Bookstore Portlet</display-name>
     <portlet-class>org.exoplatform.webui.application.portlet.PortletApplicationController</portlet-class>
     <init-param>
       <name>webui.configuration</name>
@@ -24,11 +24,11 @@
     </supports>
 
     <supported-locale>en</supported-locale>
-    <resource-bundle>locale.webui</resource-bundle>     
+    <resource-bundle>locale.bookstore</resource-bundle>     
     <portlet-info>
-      <title>My WebUI Portlet</title>
-      <short-title>WebUI Portlet</short-title>
-      <keywords>Webui</keywords>
+      <title>Bookstore Portlet</title>
+      <short-title>Bookstore Portlet</short-title>
+      <keywords>Bookstore</keywords>
     </portlet-info>     
   </portlet>
 
