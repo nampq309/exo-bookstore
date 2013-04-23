@@ -42,7 +42,7 @@ public class UIBookList extends BookstoreForm {
   public static List<Book> bookList = new ArrayList<Book>();
   
   public static List<Book> getBookList() {
-    //SET META DATA
+    //SET META DATA just for Test purpose
     if(bookList.size() == 0){
       bookList.add(new Book("id1", "Story", "ISBN XXX", "Story 1", "NXB Tuoi tre"));
       bookList.add(new Book("id2", "Story", "ISBN YYY", "Story 2", "NXB Tuoi tre"));
