@@ -4,19 +4,22 @@ import org.exoplatform.webui.core.UIPopupWindow;
   def bookList = uicomponent.getBookList();
   
 %>  
-
 <h1><center>Welcome to eXo Bookstore Portlet</center></h1>
-
+<% uiform.begin() %>
 <table border="1">
 <tr>
 <td>Category</td>
 <td>Title</td>
 <td>ISBN</td>
 <td>Publisher</td>
+<td>Actions</td>
 </tr>
 
     <%
         for(book in bookList) {
+        def editAction = uicomponent.event("Edit", book.getId());
+        def viewAction = uicomponent.event("View", book.getId());
+        def deleteAction = uicomponent.event("Delete", book.getId());
             %>
             <tr>
                 <div class="Book">
@@ -24,6 +27,11 @@ import org.exoplatform.webui.core.UIPopupWindow;
                     <td> <%= book.getTitle() %></td>
                     <td> <%= book.getIsbn() %></td>
                     <td> <%= book.getPublisher() %></td>
+                    <td> 
+                    	<a href="javascript: void(0)" onclick="$editAction" title="Edit Book" >Edit</a>/
+                    	<a href="javascript: void(0)" onclick="$viewAction" title="View Book" >View</a>/
+                    	<a href="javascript: void(0)" onclick="$deleteAction" title="Delete Book" >Delete</a>
+                    </td>
                 </div>
             </tr>
             <%
@@ -31,3 +39,8 @@ import org.exoplatform.webui.core.UIPopupWindow;
     %>
     
 </table>
+<% uiform.end() %>
+
+<div>
+<% uicomponent.renderChildren(); %>
+</div>

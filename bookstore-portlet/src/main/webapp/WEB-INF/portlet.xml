@@ -4,32 +4,32 @@
 
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
-             xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"> 
+             xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
 
-  <portlet>
-    <description xml:lang="EN">Bookstore Portlet</description>
-    <portlet-name>BookStore</portlet-name>
-    <display-name xml:lang="EN">Bookstore Portlet</display-name>
-    <portlet-class>org.exoplatform.webui.application.portlet.PortletApplicationController</portlet-class>
-    <init-param>
-      <name>webui.configuration</name>
-      <!-- must match the path to configuration file -->
-      <value>/WEB-INF/conf/portlet/webui/configuration.xml</value>
-    </init-param>    
+	<portlet>
+		<description xml:lang="EN">Bookstore Portlet</description>
+		<portlet-name>BookStore</portlet-name>
+		<display-name xml:lang="EN">Bookstore Portlet</display-name>
+		<portlet-class>org.exoplatform.webui.application.portlet.PortletApplicationController</portlet-class>
+		<init-param>
+			<name>webui.configuration</name>
+			<!-- must match the path to configuration file -->
+			<value>/WEB-INF/conf/portlet/webui/configuration.xml</value>
+		</init-param>
 
-    <expiration-cache>0</expiration-cache>
-    <supports>
-      <mime-type>text/html</mime-type>
-      <portlet-mode>help</portlet-mode>
-    </supports>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>help</portlet-mode>
+		</supports>
 
-    <supported-locale>en</supported-locale>
-    <resource-bundle>locale.bookstore</resource-bundle>     
-    <portlet-info>
-      <title>Bookstore Portlet</title>
-      <short-title>Bookstore Portlet</short-title>
-      <keywords>Bookstore</keywords>
-    </portlet-info>     
-  </portlet>
+		<supported-locale>en</supported-locale>
+		<resource-bundle>locale.bookstore</resource-bundle>
+		<portlet-info>
+			<title>Bookstore Portlet</title>
+			<short-title>Bookstore Portlet</short-title>
+			<keywords>Bookstore</keywords>
+		</portlet-info>
+	</portlet>
 
 </portlet-app>

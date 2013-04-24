@@ -16,51 +16,31 @@
  */
 package org.exoplatform.bookstore.webui;
 
+import org.exoplatform.portal.webui.container.UIContainer;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
-import org.exoplatform.webui.core.lifecycle.UIFormLifecycle;
+import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
-import org.exoplatform.webui.form.UIForm;
 
 @ComponentConfig(
- lifecycle = UIFormLifecycle.class
+ events = {
+   @EventConfig(listeners = BookFormViewer.CloseActionListener.class)
+ } 
 )
-public class BookstoreForm extends UIForm {
+public class BookFormViewer extends UIContainer {
   
+  public BookFormViewer() throws Exception {
+    
+  }
   
   /**
-   * Listens to edit event and changes the form to edit mode.<br>
-   *
+   * Listens to close the form view
    */
-  public static class EditActionListener extends EventListener<BookstoreForm> {
+  public static class CloseActionListener extends EventListener<BookFormViewer> {
 
     @Override
-    public void execute(Event<BookstoreForm> event) throws Exception {
+    public void execute(Event<BookFormViewer> event) throws Exception {
       
-    }
-  }
-  
-  /**
-   * Listens to save event and change form to non edit mode.<br> 
-   *
-   */
-  public static class SaveActionListener extends EventListener<BookstoreForm> {
-
-    @Override
-    public void execute(Event<BookstoreForm> event) throws Exception {
-
-    }
-  }
-  
-  /**
-   * Listens to cancel event and change the form to non edit mode.<br>
-   *
-   */
-  public static class CancelActionListener extends EventListener<BookstoreForm> {
-
-    @Override
-    public void execute(Event<BookstoreForm> event) throws Exception {
-
     }
   }
 

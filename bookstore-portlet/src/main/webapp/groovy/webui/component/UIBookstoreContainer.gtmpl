@@ -1,1 +1,5 @@
-<div><% uicomponent.renderChildren(); %></div>
+<div class="uiUIBookstoreContainer" id="$uicomponent.id">
+
+<% uicomponent.renderChildren(); %>
+
+</div>
