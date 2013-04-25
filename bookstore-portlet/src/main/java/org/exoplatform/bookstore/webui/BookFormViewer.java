@@ -16,22 +16,26 @@
  */
 package org.exoplatform.bookstore.webui;
 
-import org.exoplatform.portal.webui.container.UIContainer;
+import org.exoplatform.bookstore.model.Book;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
+import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
 
 @ComponentConfig(
+ template = "app:/groovy/webui/component/BookFormViewer.gtmpl",
  events = {
    @EventConfig(listeners = BookFormViewer.CloseActionListener.class)
  } 
 )
-public class BookFormViewer extends UIContainer {
+public class BookFormViewer extends UIComponent {
   
   public BookFormViewer() throws Exception {
     
   }
+  
+  private Book book = null;
   
   /**
    * Listens to close the form view
@@ -42,6 +46,14 @@ public class BookFormViewer extends UIContainer {
     public void execute(Event<BookFormViewer> event) throws Exception {
       
     }
+  }
+
+  public Book getBook() {
+    return book;
+  }
+
+  public void setBook(Book book) {
+    this.book = book;
   }
 
 }

@@ -5,13 +5,13 @@
 
   <groupId>org.exoplatform.bookstore</groupId>
   <artifactId>bookstore-sample</artifactId>
-  <version>0.2-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>pom</packaging>
   <name>Bookstore Project</name>
   <description>Bookstore Project</description>
   
   <properties>
-	<project.version>0.2-SNAPSHOT</project.version>
+	<project.version>1.0</project.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <org.exoplatform.core.verion>2.4.0-CR2</org.exoplatform.core.verion>
     <org.exoplatform.kernel.version>2.3.0-CR2</org.exoplatform.kernel.version>

@@ -1,0 +1,24 @@
+<%
+
+def bookList = uicomponent.getBook();
+def isbn = book.getIsbn();
+def title = book.getTitle();
+def publisher = book.getPublisher();
+def category = book.getLblCategory();
+%>
+
+<div class="uiBookFormViewer" id="$uicomponent.id">
+	<div class="Label">
+		Title: $title<br/>
+	</div>
+	<div class="Label">
+		Category: $category<br/>
+	</div>
+	<div class="Label">
+		ISBN: $isbn<br/>
+	</div>
+	<div class="Label">
+		Publisher: $publisher<br/>
+	</div>
+
+</div>

@@ -16,9 +16,8 @@
  */
 package org.exoplatform.bookstore.model;
 
-/**
- * This class just for test the portlet with META DATA
- */
+import org.exoplatform.bookstore.commons.Constants;
+
 public class Book {
   
   /** Id. */
@@ -26,6 +25,7 @@ public class Book {
   
   /** Book category. */
   private String category;
+  private String lblCategory;
   
   /** Book ISBN. */
   private String isbn;
@@ -39,6 +39,12 @@ public class Book {
   public Book(String id, String category, String isbn, String title, String publisher){
     this.id = id;
     this.category = category;
+    //Set Category label
+    if(this.category.equals(Constants.CATEGORY_NOVEL_VALUE)){
+      this.lblCategory = Constants.CATEGORY_NOVEL;
+    } else if(this.category.equals(Constants.CATEGORY_STORY_VALUE)){
+      this.lblCategory = Constants.CATEGORY_STORY;
+    }
     this.isbn = isbn;
     this.title = title;
     this.publisher = publisher;
@@ -82,6 +88,14 @@ public class Book {
 
   public void setPublisher(String publisher) {
     this.publisher = publisher;
+  }
+
+  public String getLblCategory() {
+    return lblCategory;
+  }
+
+  public void setLblCategory(String lblCategory) {
+    this.lblCategory = lblCategory;
   }
 
 }

@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
+import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.lifecycle.UIFormLifecycle;
 import org.exoplatform.webui.core.model.SelectItemOption;
 import org.exoplatform.webui.event.Event;
@@ -33,6 +34,7 @@ import org.exoplatform.webui.form.validator.MandatoryValidator;
 import org.exoplatform.webui.form.validator.SpecialCharacterValidator;
 import org.exoplatform.webui.form.validator.StringLengthValidator;
 
+import org.exoplatform.bookstore.BookstoreUtils;
 import org.exoplatform.bookstore.commons.Constants;
 import org.exoplatform.bookstore.model.Book;
 
@@ -94,6 +96,8 @@ public class BookForm extends UIForm {
     addUIFormInput(new UIFormStringInput(TXT_PUBLISHER, TXT_PUBLISHER, null)
                    .addValidator(MandatoryValidator.class)
                    .addValidator(StringLengthValidator.class, 10, 50));
+    
+    setSubmitAction("Save");
   }
   
   
@@ -105,7 +109,14 @@ public class BookForm extends UIForm {
 
     @Override
     public void execute(Event<BookForm> event) throws Exception {
-
+      BookForm form = event.getSource();
+      Book b = form.getBook();
+      b.setTitle(form.getUIStringInput(form.TXT_TITLE).getValue());
+      b.setIsbn(form.getUIStringInput(form.TXT_ISBN).getValue());
+      b.setPublisher(form.getUIStringInput(form.TXT_PUBLISHER).getValue());
+      b.setCategory(form.getUIFormSelectBox(form.CMB_CATEGORIES).getValue());
+      
+      BookstoreUtils.getBookservice().insert(b);
     }
   }
   
@@ -117,7 +128,8 @@ public class BookForm extends UIForm {
 
     @Override
     public void execute(Event<BookForm> event) throws Exception {
-      
+      BookForm form = event.getSource();
+      form.reset();
     }
   }
   
@@ -126,10 +138,9 @@ public class BookForm extends UIForm {
    *
    */
   public static class CancelActionListener extends EventListener<BookForm> {
-
     @Override
     public void execute(Event<BookForm> event) throws Exception {
-
+      
     }
   }
 
@@ -141,7 +152,7 @@ public class BookForm extends UIForm {
     this.book = book;
     //Fill book's info
     this.getUIStringInput(TXT_TITLE).setValue(book.getTitle());
-    this.getUIStringInput(CMB_CATEGORIES).setValue(book.getCategory());
+    this.getUIFormSelectBox(CMB_CATEGORIES).setValue(book.getCategory());
     this.getUIStringInput(TXT_ISBN).setValue(book.getIsbn());
     this.getUIStringInput(TXT_PUBLISHER).setValue(book.getPublisher());
   }

@@ -19,10 +19,13 @@ package org.exoplatform.bookstore.webui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.exoplatform.bookstore.BookstoreUtils;
 import org.exoplatform.bookstore.model.Book;
+import org.exoplatform.bookstore.storage.api.BookStorage;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
+import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.UIPopupWindow;
 import org.exoplatform.webui.core.lifecycle.UIFormLifecycle;
 import org.exoplatform.webui.event.Event;
@@ -35,7 +38,7 @@ import org.exoplatform.webui.form.UIForm;
  template = "app:/groovy/webui/component/UIBookList.gtmpl",
  events = {
    @EventConfig(listeners = UIBookList.EditActionListener.class, phase = Phase.DECODE),
-   @EventConfig(listeners = UIBookList.DeleteActionListener.class)
+   @EventConfig(listeners = UIBookList.DeleteActionListener.class, confirm = "Are you sure to delete this book?")
  }
 )
 public class UIBookList extends UIForm {
@@ -48,12 +51,13 @@ public class UIBookList extends UIForm {
   
   public static List<Book> getBookList() {
     //SET META DATA just for Test purpose
-    if(bookList.size() == 0) {
-      bookList.add(new Book("id1", "Story", "ISBN XXX", "Story 1", "NXB Tuoi tre"));
-      bookList.add(new Book("id2", "Story", "ISBN YYY", "Story 2", "NXB Tuoi tre"));
-      bookList.add(new Book("id3", "Story", "ISBN ZZZ", "Story 3", "NXB Tuoi tre"));
+    if(bookList.size() > 0) {
+      //bookList.add(new Book("id1", "Story", "ISBN XXX", "Story 1", "NXB Tuoi tre"));
+      //bookList.add(new Book("id2", "Story", "ISBN YYY", "Story 2", "NXB Tuoi tre"));
+      //bookList.add(new Book("id3", "Story", "ISBN ZZZ", "Story 3", "NXB Tuoi tre"));
+      return bookList;
     }
-    return bookList;
+    return BookstoreUtils.getBookservice().findAll();
   }
   
 
@@ -68,19 +72,21 @@ public class UIBookList extends UIForm {
       String bookId = ctx.getRequestParameter("objectId");
       System.out.println("Get BookId: "+ bookId);
       UIBookList form = event.getSource();
-      UIPopupWindow popup = form.getChild(UIPopupWindow.class);
+      /*UIPopupWindow popup = form.getChild(UIPopupWindow.class);
       if(popup == null) {
         popup = form.addChild(UIPopupWindow.class, null, null);
-        popup.setWindowSize(400, 400);
+        popup.setWindowSize(400, 250);
         form.addChild(popup);
-      }
+      }*/
       BookForm bookForm = form.createUIComponent(BookForm.class, null, null);
       //TODO Set book's info
-      //Book book = bookService.findById(bookId);
-      //bookForm.setBook(book);
-      popup.setUIComponent(bookForm);
+      BookStorage bookService = BookstoreUtils.getBookservice();
+      Book book = bookService.findById(bookId);
+      bookForm.setBook(book);
+      form.setUIComponentForPopupWindow(form, bookForm);
+      /*popup.setUIComponent(bookForm);
       popup.setRendered(true);
-      popup.setShow(true);
+      popup.setShow(true);*/
     }
   }
   
@@ -92,7 +98,16 @@ public class UIBookList extends UIForm {
 
     @Override
     public void execute(Event<UIBookList> event) throws Exception {
-
+      WebuiRequestContext ctx = event.getRequestContext();
+      String bookId = ctx.getRequestParameter("objectId");
+      System.out.println("Get BookId: "+ bookId);
+      UIBookList form = event.getSource();
+      BookFormViewer bookFormViewer = form.createUIComponent(BookFormViewer.class, null, null);
+      //TODO Set book's info
+      BookStorage bookService = BookstoreUtils.getBookservice();
+      Book book = bookService.findById(bookId);
+      bookFormViewer.setBook(book);
+      form.setUIComponentForPopupWindow(form, bookFormViewer);
     }
   }
   
@@ -104,8 +119,22 @@ public class UIBookList extends UIForm {
 
     @Override
     public void execute(Event<UIBookList> event) throws Exception {
-
+      WebuiRequestContext ctx = event.getRequestContext();
+      String bookId = ctx.getRequestParameter("objectId");
+      BookstoreUtils.getBookservice().deleteBook(bookId);
     }
+  }
+  
+  private void setUIComponentForPopupWindow(UIBookList form, UIComponent uiComponent) throws Exception {
+    UIPopupWindow popup = form.getChild(UIPopupWindow.class);
+    if(popup == null) {
+      popup = form.addChild(UIPopupWindow.class, null, null);
+      popup.setWindowSize(400, 250);
+      form.addChild(popup);
+    }
+    popup.setUIComponent(uiComponent);
+    popup.setRendered(true);
+    popup.setShow(true);
   }
   
 }
