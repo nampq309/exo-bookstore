@@ -14,10 +14,8 @@
 * You should have received a copy of the GNU General Public License
 * along with this program; if not, see<http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.bookstore.service.impl;
+package org.exoplatform.bookstore.jcr.model;
 
-import org.exoplatform.bookstore.service.api.BookStoreService;
-
-public class BookStoreServiceImlp implements BookStoreService {
+public class CategoryHome {
 
 }

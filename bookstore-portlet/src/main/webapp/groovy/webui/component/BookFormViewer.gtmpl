@@ -15,7 +15,7 @@ def lblPublisher = _ctx.appRes("BookstorePortlet.label.lblPubsher");
 %>
 
 <div class="uiBookFormViewer" id="$uicomponent.id">
-	<h1>lblWelcome</h1>
+	<h1>$lblWelcome</h1>
 	<div class="UILabel">
 		$lblTitle: $title<br/>
 	</div>

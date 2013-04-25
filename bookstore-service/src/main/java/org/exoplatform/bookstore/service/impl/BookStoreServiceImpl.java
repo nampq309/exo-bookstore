@@ -14,42 +14,25 @@
 * You should have received a copy of the GNU General Public License
 * along with this program; if not, see<http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.bookstore.storage.impl;
+package org.exoplatform.bookstore.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
-import org.exoplatform.bookstore.commons.Constants;
 import org.exoplatform.bookstore.jcr.model.Book;
-import org.exoplatform.bookstore.storage.api.BookStorage;
+import org.exoplatform.bookstore.service.api.BookStoreService;
 
-public class BookStorageImpl implements BookStorage {
-  
+public class BookStoreServiceImpl implements BookStoreService {
 
-  private Map<String, Book> data = new HashMap<String, Book>();
-  private static BookStorageImpl instance = null;
-  
   @Override
   public Book insert(Book book) {
-    String bookId = book.getId();
-    if(!bookId.equals("")){
-      while(true){
-        String tmpBookId = "id"+ new Random().nextInt(1000);
-        if(findById(tmpBookId) == null){
-          book.setId(tmpBookId);
-          break;
-        }
-      }
-    }
+    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public Book findById(String id) {
-    return data.get(id);
+    // TODO Auto-generated method stub
+    return null;
   }
 
   @Override
@@ -72,22 +55,20 @@ public class BookStorageImpl implements BookStorage {
 
   @Override
   public List<Book> findAll() {
-    loadTmpData();
-    List<Book> list = new ArrayList<Book>();
-    for(Book b : data.values()){
-      list.add(b);
-    }
-    return list;
+    // TODO Auto-generated method stub
+    return null;
   }
 
   @Override
   public void updateBook(Book book) {
-    data.put(book.getId(), book);
+    // TODO Auto-generated method stub
+    
   }
 
   @Override
   public void deleteBook(String id) {
-    data.remove(id);
+    // TODO Auto-generated method stub
+    
   }
 
   @Override
@@ -106,24 +87,6 @@ public class BookStorageImpl implements BookStorage {
   public List<String> getAllCategories() {
     // TODO Auto-generated method stub
     return null;
-  }
-  
-  /** Just for test purpose */
-  private void loadTmpData() {
-    if(data.size() == 0){
-      for(int i =1; i <= 10; i++){
-        String bookId = "id"+i;
-        String category = Constants.CATEGORY_NOVEL_VALUE;
-        if(i%2 == 0) category = Constants.CATEGORY_STORY_VALUE;
-        Book b = new Book("id"+i, category, "ISBN "+i, "Title "+i, "Publisher "+i);
-        data.put(bookId, b);
-      }
-    }
-  }
-  
-  public static BookStorageImpl getInstance() {
-    if(instance == null) instance = new BookStorageImpl();
-    return instance;
   }
 
 }

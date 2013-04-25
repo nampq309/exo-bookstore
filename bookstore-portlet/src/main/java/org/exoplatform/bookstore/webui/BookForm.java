@@ -36,7 +36,7 @@ import org.exoplatform.webui.form.validator.StringLengthValidator;
 
 import org.exoplatform.bookstore.BookstoreUtils;
 import org.exoplatform.bookstore.commons.Constants;
-import org.exoplatform.bookstore.model.Book;
+import org.exoplatform.bookstore.jcr.model.Book;
 
 /**
  * 
@@ -118,9 +118,9 @@ public class BookForm extends UIForm {
       b.setPublisher(form.getUIStringInput(form.TXT_PUBLISHER).getValue());
       b.setCategory(form.getUIFormSelectBox(form.CMB_CATEGORIES).getValue());
       if(form.isCreate)
-        BookstoreUtils.getBookservice().insert(b);
+        BookstoreUtils.getBookstoreService().insert(b);
       else 
-        BookstoreUtils.getBookservice().updateBook(b);
+        BookstoreUtils.getBookstoreService().updateBook(b);
     }
   }
   

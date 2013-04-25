@@ -16,13 +16,18 @@
  */
 package org.exoplatform.bookstore;
 
-import org.exoplatform.bookstore.storage.api.BookStorage;
-import org.exoplatform.bookstore.storage.impl.BookStorageImpl;
+import org.exoplatform.bookstore.service.api.BookStoreService;
+import org.exoplatform.container.ExoContainerContext;
 
 public class BookstoreUtils {
   
-  public static BookStorage getBookservice() {
-    return BookStorageImpl.getInstance();
+  private static BookStoreService bookStoreSerivce = null;
+  
+  public static BookStoreService getBookstoreService() {
+    if (bookStoreSerivce == null) {
+      bookStoreSerivce = (BookStoreService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(BookStoreService.class);
+    }
+    return bookStoreSerivce;
   }
 
 }

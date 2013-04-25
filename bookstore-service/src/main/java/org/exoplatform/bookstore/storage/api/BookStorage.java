@@ -18,7 +18,7 @@ package org.exoplatform.bookstore.storage.api;
 
 import java.util.List;
 
-import org.exoplatform.bookstore.model.Book;
+import org.exoplatform.bookstore.jcr.model.Book;
 
 public interface BookStorage {
   

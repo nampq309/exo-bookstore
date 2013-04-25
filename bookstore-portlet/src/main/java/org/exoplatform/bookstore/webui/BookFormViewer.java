@@ -16,12 +16,9 @@
  */
 package org.exoplatform.bookstore.webui;
 
-import org.exoplatform.bookstore.model.Book;
+import org.exoplatform.bookstore.jcr.model.Book;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
-import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIComponent;
-import org.exoplatform.webui.event.Event;
-import org.exoplatform.webui.event.EventListener;
 
 @ComponentConfig(
  template = "app:/groovy/webui/component/BookFormViewer.gtmpl"

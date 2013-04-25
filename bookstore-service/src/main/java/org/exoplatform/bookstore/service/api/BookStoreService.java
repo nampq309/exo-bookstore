@@ -16,6 +16,91 @@
  */
 package org.exoplatform.bookstore.service.api;
 
+import java.util.List;
+
+import org.exoplatform.bookstore.jcr.model.Book;
+
 public interface BookStoreService {
+  
+  /**
+   * Method used to insert book.<br/> 
+   * 
+   * @param book
+   * @return Book inserted.
+   */
+  public Book insert(Book book);
+  
+  /**
+   * Method used to find book by id.<br/>
+   * 
+   * @param id
+   * @return Book found by id.
+   */
+  public Book findById(String id);
+  
+  /**
+   * Method used to find book by isbn.<br/>
+   * 
+   * @param isbn
+   * @return Book found by isbn.
+   */
+  public Book findByIsbn(String isbn);
+  
+  /**
+   * Method used to find book by title.<br/>
+   * 
+   * @param title
+   * @return Book found by isbn.
+   */
+  public List<Book> findByTitle(String title);
+  
+  /**
+   * Method used to find book by publisher.<br/>
+   * 
+   * @param publisher
+   * @return List of result books.
+   */
+  public List<Book> findByPublisher(String publisher);
+  
+  /**
+   * Method used to find all book.<br/>
+   * 
+   * @return List of books.
+   */
+  public List<Book> findAll();
+  
+  /**
+   * Method used to update book.<br/>
+   * 
+   * @param book
+   * @return Book updated.
+   */
+  public void updateBook(Book book);
+
+  /**
+   * Method used to delete book by id.<br/>
+   * 
+   * @param id
+   */
+  public void deleteBook(String id);
+
+  /**
+   * Method used to delete all book.<br/>
+   */
+  public void deleteAll(); 
+
+  /**
+   * Method used to check book exist.<br/>
+   * 
+   * @param isbn
+   */
+  public boolean isExists(String isbn);
+
+  /**
+   * Method used to get category list.<br/>
+   * 
+   * @return All categories.
+   */
+  public List<String> getAllCategories();
 
 }

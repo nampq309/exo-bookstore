@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.exoplatform.bookstore.BookstoreUtils;
-import org.exoplatform.bookstore.model.Book;
-import org.exoplatform.bookstore.storage.api.BookStorage;
+import org.exoplatform.bookstore.jcr.model.Book;
+import org.exoplatform.bookstore.service.api.BookStoreService;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
@@ -59,7 +59,7 @@ public class UIBookList extends UIForm {
       //bookList.add(new Book("id3", "Story", "ISBN ZZZ", "Story 3", "NXB Tuoi tre"));
       return bookList;
     }
-    return BookstoreUtils.getBookservice().findAll();
+    return BookstoreUtils.getBookstoreService().findAll();
   }
   
   
@@ -93,7 +93,7 @@ public class UIBookList extends UIForm {
       UIBookList form = event.getSource();
       BookForm bookForm = form.createUIComponent(BookForm.class, null, null);
       //TODO Set book's info
-      BookStorage bookService = BookstoreUtils.getBookservice();
+      BookStoreService bookService = BookstoreUtils.getBookstoreService();
       Book book = bookService.findById(bookId);
       bookForm.setBook(book);
       form.setUIComponentForPopupWindow(form, bookForm);
@@ -114,7 +114,7 @@ public class UIBookList extends UIForm {
       UIBookList form = event.getSource();
       BookFormViewer bookFormViewer = form.createUIComponent(BookFormViewer.class, null, null);
       //TODO Set book's info
-      BookStorage bookService = BookstoreUtils.getBookservice();
+      BookStoreService bookService = BookstoreUtils.getBookstoreService();
       Book book = bookService.findById(bookId);
       bookFormViewer.setBook(book);
       form.setUIComponentForPopupWindow(form, bookFormViewer);
@@ -131,7 +131,7 @@ public class UIBookList extends UIForm {
     public void execute(Event<UIBookList> event) throws Exception {
       WebuiRequestContext ctx = event.getRequestContext();
       String bookId = ctx.getRequestParameter("objectId");
-      BookstoreUtils.getBookservice().deleteBook(bookId);
+      BookstoreUtils.getBookstoreService().deleteBook(bookId);
     }
   }
   
