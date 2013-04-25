@@ -37,7 +37,9 @@ import org.exoplatform.webui.form.UIForm;
  lifecycle = UIFormLifecycle.class,
  template = "app:/groovy/webui/component/UIBookList.gtmpl",
  events = {
+   @EventConfig(listeners = UIBookList.CreateActionListener.class, phase = Phase.DECODE),
    @EventConfig(listeners = UIBookList.EditActionListener.class, phase = Phase.DECODE),
+   @EventConfig(listeners = UIBookList.ViewActionListener.class, phase = Phase.DECODE),
    @EventConfig(listeners = UIBookList.DeleteActionListener.class, confirm = "Are you sure to delete this book?")
  }
 )
@@ -60,6 +62,23 @@ public class UIBookList extends UIForm {
     return BookstoreUtils.getBookservice().findAll();
   }
   
+  
+  /**
+   * Listens to create new Book
+   *
+   */
+  public static class CreateActionListener extends EventListener<UIBookList> {
+    @Override
+    public void execute(Event<UIBookList> event) throws Exception {
+      WebuiRequestContext ctx = event.getRequestContext();
+      String bookId = ctx.getRequestParameter("objectId");
+      System.out.println("Get BookId: "+ bookId);
+      UIBookList form = event.getSource();
+      BookForm bookForm = form.createUIComponent(BookForm.class, null, null);
+      bookForm.setCreate(true);
+      form.setUIComponentForPopupWindow(form, bookForm);
+    }
+  }
 
   /**
    * Listens to edit a Book item
@@ -72,21 +91,12 @@ public class UIBookList extends UIForm {
       String bookId = ctx.getRequestParameter("objectId");
       System.out.println("Get BookId: "+ bookId);
       UIBookList form = event.getSource();
-      /*UIPopupWindow popup = form.getChild(UIPopupWindow.class);
-      if(popup == null) {
-        popup = form.addChild(UIPopupWindow.class, null, null);
-        popup.setWindowSize(400, 250);
-        form.addChild(popup);
-      }*/
       BookForm bookForm = form.createUIComponent(BookForm.class, null, null);
       //TODO Set book's info
       BookStorage bookService = BookstoreUtils.getBookservice();
       Book book = bookService.findById(bookId);
       bookForm.setBook(book);
       form.setUIComponentForPopupWindow(form, bookForm);
-      /*popup.setUIComponent(bookForm);
-      popup.setRendered(true);
-      popup.setShow(true);*/
     }
   }
   

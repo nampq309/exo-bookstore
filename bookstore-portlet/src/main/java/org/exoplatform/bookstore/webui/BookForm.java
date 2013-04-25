@@ -67,6 +67,8 @@ public class BookForm extends UIForm {
   
   private Book book = null;
   
+  private boolean isCreate = false;
+  
   public BookForm() throws Exception {
     
     // Create Book category select box.
@@ -115,8 +117,10 @@ public class BookForm extends UIForm {
       b.setIsbn(form.getUIStringInput(form.TXT_ISBN).getValue());
       b.setPublisher(form.getUIStringInput(form.TXT_PUBLISHER).getValue());
       b.setCategory(form.getUIFormSelectBox(form.CMB_CATEGORIES).getValue());
-      
-      BookstoreUtils.getBookservice().insert(b);
+      if(form.isCreate)
+        BookstoreUtils.getBookservice().insert(b);
+      else 
+        BookstoreUtils.getBookservice().updateBook(b);
     }
   }
   
@@ -145,6 +149,9 @@ public class BookForm extends UIForm {
   }
 
   public Book getBook() {
+    if(book == null){
+      book = new Book("","","","","");
+    }
     return book;
   }
 
@@ -155,6 +162,14 @@ public class BookForm extends UIForm {
     this.getUIFormSelectBox(CMB_CATEGORIES).setValue(book.getCategory());
     this.getUIStringInput(TXT_ISBN).setValue(book.getIsbn());
     this.getUIStringInput(TXT_PUBLISHER).setValue(book.getPublisher());
+  }
+
+  public boolean isCreate() {
+    return isCreate;
+  }
+
+  public void setCreate(boolean isCreate) {
+    this.isCreate = isCreate;
   }
 
 }

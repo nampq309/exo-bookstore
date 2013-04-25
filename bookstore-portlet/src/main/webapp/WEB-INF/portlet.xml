@@ -24,7 +24,7 @@
 		</supports>
 
 		<supported-locale>en</supported-locale>
-		<resource-bundle>locale.bookstore</resource-bundle>
+		<resource-bundle>locale.BookstorePortlet</resource-bundle>
 		<portlet-info>
 			<title>Bookstore Portlet</title>
 			<short-title>Bookstore Portlet</short-title>

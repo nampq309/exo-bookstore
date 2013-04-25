@@ -1,24 +1,32 @@
 <%
 
-def bookList = uicomponent.getBook();
+def book = uicomponent.getBook();
 def isbn = book.getIsbn();
 def title = book.getTitle();
 def publisher = book.getPublisher();
 def category = book.getLblCategory();
+
+def lblWelcome = _ctx.appRes("BookstorePortlet.label.welcome");
+def lblTitle = _ctx.appRes("BookstorePortlet.label.lblTitle");
+def lblCategory = _ctx.appRes("BookstorePortlet.label.lblCategory");
+def lblIsbn = _ctx.appRes("BookstorePortlet.label.lblIsbn");
+def lblPublisher = _ctx.appRes("BookstorePortlet.label.lblPubsher");
+
 %>
 
 <div class="uiBookFormViewer" id="$uicomponent.id">
-	<div class="Label">
-		Title: $title<br/>
+	<h1>lblWelcome</h1>
+	<div class="UILabel">
+		$lblTitle: $title<br/>
 	</div>
-	<div class="Label">
-		Category: $category<br/>
+	<div class="UILabel">
+		$lblCategory: $category<br/>
 	</div>
-	<div class="Label">
-		ISBN: $isbn<br/>
+	<div class="UILabel">
+		$lblIsbn: $isbn<br/>
 	</div>
-	<div class="Label">
-		Publisher: $publisher<br/>
+	<div class="UILabel">
+		$lblPublisher: $publisher<br/>
 	</div>
 
 </div>

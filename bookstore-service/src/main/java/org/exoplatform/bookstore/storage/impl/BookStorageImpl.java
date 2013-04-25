@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.exoplatform.bookstore.commons.Constants;
 import org.exoplatform.bookstore.model.Book;
@@ -33,6 +34,16 @@ public class BookStorageImpl implements BookStorage {
   
   @Override
   public Book insert(Book book) {
+    String bookId = book.getId();
+    if(!bookId.equals("")){
+      while(true){
+        String tmpBookId = "id"+ new Random().nextInt(1000);
+        if(findById(tmpBookId) == null){
+          book.setId(tmpBookId);
+          break;
+        }
+      }
+    }
     return null;
   }
 

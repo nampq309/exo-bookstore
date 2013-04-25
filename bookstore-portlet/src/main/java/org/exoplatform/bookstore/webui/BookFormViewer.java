@@ -24,10 +24,7 @@ import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
 
 @ComponentConfig(
- template = "app:/groovy/webui/component/BookFormViewer.gtmpl",
- events = {
-   @EventConfig(listeners = BookFormViewer.CloseActionListener.class)
- } 
+ template = "app:/groovy/webui/component/BookFormViewer.gtmpl"
 )
 public class BookFormViewer extends UIComponent {
   
@@ -36,17 +33,6 @@ public class BookFormViewer extends UIComponent {
   }
   
   private Book book = null;
-  
-  /**
-   * Listens to close the form view
-   */
-  public static class CloseActionListener extends EventListener<BookFormViewer> {
-
-    @Override
-    public void execute(Event<BookFormViewer> event) throws Exception {
-      
-    }
-  }
 
   public Book getBook() {
     return book;
