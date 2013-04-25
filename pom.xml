@@ -13,10 +13,11 @@
   <properties>
 	<project.version>1.0</project.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <org.exoplatform.core.verion>2.4.0-CR2</org.exoplatform.core.verion>
-    <org.exoplatform.kernel.version>2.3.0-CR2</org.exoplatform.kernel.version>
-    <org.exoplatform.ws.version>2.2.0-CR2</org.exoplatform.ws.version>
-    <org.exoplatform.portal.version>3.2.1-PLF-SNAPSHOT</org.exoplatform.portal.version>
+    <org.exoplatform.core.verion>2.5.3-GA</org.exoplatform.core.verion>
+    <org.exoplatform.kernel.version>2.4.3-GA</org.exoplatform.kernel.version>
+    <exo.jcr.component.core.version>1.15.3-GA</exo.jcr.component.core.version>
+    <org.exoplatform.ws.version>2.4.3-GA</org.exoplatform.ws.version>
+    <org.exoplatform.portal.version>3.5.x-PLF-SNAPSHOT</org.exoplatform.portal.version>
     <org.chromattic.version>1.1.0-beta6</org.chromattic.version>
     <org.chromattic.ext.version>1.1.1</org.chromattic.ext.version>
     <org.hsqldb.version>1.8.0.10</org.hsqldb.version>

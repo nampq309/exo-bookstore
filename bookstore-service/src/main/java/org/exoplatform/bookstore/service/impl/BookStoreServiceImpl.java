@@ -16,23 +16,49 @@
  */
 package org.exoplatform.bookstore.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
+import javax.jcr.Session;
+
+import org.exoplatform.bookstore.commons.Constants;
 import org.exoplatform.bookstore.jcr.model.Book;
 import org.exoplatform.bookstore.service.api.BookStoreService;
+import org.exoplatform.bookstore.storage.impl.BookStorageImpl;
+import org.exoplatform.container.ExoContainerContext;
+import org.exoplatform.services.jcr.RepositoryService;
 
 public class BookStoreServiceImpl implements BookStoreService {
 
+  private Map<String, Book> data = new HashMap<String, Book>();
+  private static BookStorageImpl instance = null;
+  
+  public BookStoreServiceImpl() {
+//    RepositoryService repositoryService = (RepositoryService) container.getComponentInstanceOfType(RepositoryService.class);
+//    Repository repository = repositoryService.getRepository("repositoryName"); 
+  }
+  
   @Override
   public Book insert(Book book) {
-    // TODO Auto-generated method stub
+    String bookId = book.getId();
+    if(!bookId.equals("")){
+      while(true){
+        String tmpBookId = "id"+ new Random().nextInt(1000);
+        if(findById(tmpBookId) == null){
+          book.setId(tmpBookId);
+          break;
+        }
+      }
+    }
     return null;
   }
 
   @Override
   public Book findById(String id) {
-    // TODO Auto-generated method stub
-    return null;
+    return data.get(id);
   }
 
   @Override
@@ -55,20 +81,22 @@ public class BookStoreServiceImpl implements BookStoreService {
 
   @Override
   public List<Book> findAll() {
-    // TODO Auto-generated method stub
-    return null;
+    loadTmpData();
+    List<Book> list = new ArrayList<Book>();
+    for(Book b : data.values()){
+      list.add(b);
+    }
+    return list;
   }
 
   @Override
   public void updateBook(Book book) {
-    // TODO Auto-generated method stub
-    
+    data.put(book.getId(), book);
   }
 
   @Override
   public void deleteBook(String id) {
-    // TODO Auto-generated method stub
-    
+    data.remove(id);
   }
 
   @Override
@@ -87,6 +115,30 @@ public class BookStoreServiceImpl implements BookStoreService {
   public List<String> getAllCategories() {
     // TODO Auto-generated method stub
     return null;
+  }
+  
+  /** Just for test purpose */
+  private void loadTmpData() {
+    if(data.size() == 0){
+      for(int i =1; i <= 10; i++){
+        String bookId = "id"+i;
+        String category = Constants.CATEGORY_NOVEL_VALUE;
+        if(i%2 == 0) category = Constants.CATEGORY_STORY_VALUE;
+        Book b = new Book("id"+i, category, "ISBN "+i, "Title "+i, "Publisher "+i);
+        data.put(bookId, b);
+      }
+    }
+  }
+  
+  /**
+   * Gets the sesison.
+   * 
+   * @return the sesison
+   * @throws Exception if Repository or RepositoryConfiguration occur exception
+   */
+  private Session getSesison() throws Exception {
+    RepositoryService repoService = (RepositoryService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(RepositoryService.class);
+    return repoService.getCurrentRepository().getSystemSession("system-portal");
   }
 
 }
