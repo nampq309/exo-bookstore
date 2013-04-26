@@ -17,27 +17,36 @@
 package org.exoplatform.bookstore.jcr.model;
 
 import org.exoplatform.bookstore.commons.Constants;
+import org.exoplatform.bookstore.service.api.BookstoreNodeTypes;
+import org.exoplatform.services.jcr.util.IdGenerator;
 
 public class Book {
   
   /** Id. */
-  private String id;
+  private String  id;
+  
+  private String  parentPath;
   
   /** Book category. */
-  private String category;
-  private String lblCategory;
+  private String  category;
+  private String  lblCategory;
   
   /** Book ISBN. */
-  private String isbn;
+  private String  isbn;
   
   /** Book title. */
-  private String title;
+  private String  title;
   
   /** Book publisher. */
-  private String publisher;
+  private String  publisher;
   
-  public Book(String id, String category, String isbn, String title, String publisher){
-    this.id = id;
+  
+  public Book() {
+    
+  }
+  
+  public Book(String category, String isbn, String title, String publisher){
+    this.id = BookstoreNodeTypes.BOOK + IdGenerator.generate();
     this.category = category;
     //Set Category label
     if(this.category.equals(Constants.CATEGORY_NOVEL_VALUE)){
@@ -96,6 +105,14 @@ public class Book {
 
   public void setLblCategory(String lblCategory) {
     this.lblCategory = lblCategory;
+  }
+
+  public String getParentPath() {
+    return parentPath;
+  }
+
+  public void setParentPath(String parentPath) {
+    this.parentPath = parentPath;
   }
 
 }

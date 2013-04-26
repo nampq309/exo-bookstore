@@ -36,7 +36,11 @@
     <supertypes>
       <supertype>nt:base</supertype>
     </supertypes>
-    <propertyDefinitions/>
+    <propertyDefinitions>
+    	<propertyDefinition name="exo:lblCategory" requiredType="String" autoCreated="false" mandatory="false" onParentVersion="COPY" protected="false" multiple="false">
+        <valueConstraints/>
+      </propertyDefinition>
+    </propertyDefinitions>
     <childNodeDefinitions>
       <childNodeDefinition name="*" defaultPrimaryType="exo:book" autoCreated="false" mandatory="false" onParentVersion="VERSION" protected="false" sameNameSiblings="false">
         <requiredPrimaryTypes>

@@ -19,6 +19,7 @@ package org.exoplatform.bookstore.service.api;
 import java.util.List;
 
 import org.exoplatform.bookstore.jcr.model.Book;
+import org.exoplatform.bookstore.jcr.model.Category;
 
 public interface BookStoreService {
   
@@ -101,6 +102,6 @@ public interface BookStoreService {
    * 
    * @return All categories.
    */
-  public List<String> getAllCategories();
+  public List<Category> getAllCategories();
 
 }

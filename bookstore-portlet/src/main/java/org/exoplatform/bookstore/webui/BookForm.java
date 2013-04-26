@@ -37,6 +37,7 @@ import org.exoplatform.webui.form.validator.StringLengthValidator;
 import org.exoplatform.bookstore.BookstoreUtils;
 import org.exoplatform.bookstore.commons.Constants;
 import org.exoplatform.bookstore.jcr.model.Book;
+import org.exoplatform.bookstore.jcr.model.Category;
 
 /**
  * 
@@ -69,16 +70,12 @@ public class BookForm extends UIForm {
   
   private boolean isCreate = false;
   
+  public List<SelectItemOption<String>> categoryList;
+  
   public BookForm() throws Exception {
     
     // Create Book category select box.
-    SelectItemOption<String> categoryNovel = new SelectItemOption<String>(Constants.CATEGORY_NOVEL,
-                                                                          Constants.CATEGORY_NOVEL_VALUE);
-    SelectItemOption<String> categoryStory = new SelectItemOption<String>(Constants.CATEGORY_STORY,
-                                                                          Constants.CATEGORY_STORY_VALUE);
-    List<SelectItemOption<String>> categoryList = new ArrayList<SelectItemOption<String>>();
-    categoryList.add(categoryNovel);
-    categoryList.add(categoryStory);
+    categoryList = new ArrayList<SelectItemOption<String>>();
     
     // Add form input.
     addUIFormInput(new UIFormStringInput(TXT_TITLE, TXT_TITLE, null)
@@ -150,7 +147,7 @@ public class BookForm extends UIForm {
 
   public Book getBook() {
     if(book == null){
-      book = new Book("","","","","");
+      book = new Book();
     }
     return book;
   }
@@ -163,6 +160,22 @@ public class BookForm extends UIForm {
     this.getUIStringInput(TXT_ISBN).setValue(book.getIsbn());
     this.getUIStringInput(TXT_PUBLISHER).setValue(book.getPublisher());
   }
+  
+  
+  private List<Category> getCategories() {
+    List<Category> list = new ArrayList<Category>();
+    if(categoryList != null){
+      list = BookstoreUtils.getBookstoreService().getAllCategories();
+      categoryList = new ArrayList<SelectItemOption<String>>();
+      for(Category category : list){
+        // Create Book category select box.
+        SelectItemOption<String> categoryItem = new SelectItemOption<String>(category.getLblCategory(),
+                                                                              category.getId());
+        categoryList.add(categoryItem);
+      }
+    }
+    return list;
+  }
 
   public boolean isCreate() {
     return isCreate;
@@ -170,6 +183,14 @@ public class BookForm extends UIForm {
 
   public void setCreate(boolean isCreate) {
     this.isCreate = isCreate;
+  }
+
+  public List<SelectItemOption<String>> getCategoryList() {
+    return categoryList;
+  }
+
+  public void setCategoryList(List<SelectItemOption<String>> categoryList) {
+    this.categoryList = categoryList;
   }
 
 }

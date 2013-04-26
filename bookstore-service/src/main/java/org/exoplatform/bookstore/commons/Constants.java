@@ -27,6 +27,4 @@ public class Constants {
   public static final String CATEGORY_STORY_VALUE = "2";
   
   
-  
-
 }

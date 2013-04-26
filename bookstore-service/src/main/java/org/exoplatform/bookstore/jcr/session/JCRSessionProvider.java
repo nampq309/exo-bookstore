@@ -14,35 +14,8 @@
 * You should have received a copy of the GNU General Public License
 * along with this program; if not, see<http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.bookstore.jcr.model;
+package org.exoplatform.bookstore.jcr.session;
 
-import org.exoplatform.bookstore.service.api.BookstoreNodeTypes;
-import org.exoplatform.services.jcr.util.IdGenerator;
-
-public class Category {
-  
-  public Category(String lblCategory) {
-    this.id = BookstoreNodeTypes.CATEGORY + IdGenerator.generate();
-  }
-  
-  private String id;
-  
-  private String lblCategory;
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getLblCategory() {
-    return lblCategory;
-  }
-
-  public void setLblCategory(String lblCategory) {
-    this.lblCategory = lblCategory;
-  }
+public class JCRSessionProvider {
 
 }

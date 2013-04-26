@@ -115,8 +115,8 @@ public class BookStorageImpl implements BookStorage {
         String bookId = "id"+i;
         String category = Constants.CATEGORY_NOVEL_VALUE;
         if(i%2 == 0) category = Constants.CATEGORY_STORY_VALUE;
-        Book b = new Book("id"+i, category, "ISBN "+i, "Title "+i, "Publisher "+i);
-        data.put(bookId, b);
+        //Book b = new Book("id"+i, category, "ISBN "+i, "Title "+i, "Publisher "+i);
+        //data.put(bookId, b);
       }
     }
   }
