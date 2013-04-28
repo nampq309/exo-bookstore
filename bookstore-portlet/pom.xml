@@ -25,11 +25,9 @@
 			<groupId>org.gatein.portal</groupId>
 			<artifactId>exo.portal.webui.eXo</artifactId>
 		</dependency>
-		<dependency>
+	<dependency>
       <groupId>org.exoplatform.bookstore</groupId>
       <artifactId>bookstore-service</artifactId>
-      <version>1.0</version>
-      <scope>provided</scope>
     </dependency>
 	</dependencies>
 	<build>
