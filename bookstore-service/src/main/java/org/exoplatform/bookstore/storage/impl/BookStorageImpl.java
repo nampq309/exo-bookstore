@@ -28,7 +28,6 @@ import org.exoplatform.bookstore.storage.api.BookStorage;
 
 public class BookStorageImpl implements BookStorage {
   
-
   private Map<String, Book> data = new HashMap<String, Book>();
   private static BookStorageImpl instance = null;
   
@@ -104,7 +103,6 @@ public class BookStorageImpl implements BookStorage {
 
   @Override
   public List<String> getAllCategories() {
-    // TODO Auto-generated method stub
     return null;
   }
   

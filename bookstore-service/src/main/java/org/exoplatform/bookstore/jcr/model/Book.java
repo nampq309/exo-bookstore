@@ -42,7 +42,7 @@ public class Book {
   
   
   public Book() {
-    
+	this.id = BookstoreNodeTypes.BOOK + IdGenerator.generate();
   }
   
   public Book(String category, String isbn, String title, String publisher){

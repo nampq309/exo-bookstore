@@ -16,22 +16,9 @@
  */
 package org.exoplatform.book.service;
 
-import junit.framework.TestCase;
+import org.exoplatform.book.base.BaseTestCase;
 
-import org.exoplatform.component.test.AbstractKernelTest;
-import org.exoplatform.component.test.ConfigurationUnit;
-import org.exoplatform.component.test.ConfiguredBy;
-import org.exoplatform.component.test.ContainerScope;
-
-
-
-@ConfiguredBy({
-  @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/component.core.test.configuration.xml"),
-  @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/component.service.test.configuration.xml"),
-  @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/test.jcr-configuration.xml"),
-  @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/test.portal-configuration.xml")
-})
-public class BookServiceTest extends TestCase {
+public class BookServiceTest extends BaseTestCase {
 
   @Override
   public void setUp() throws Exception {

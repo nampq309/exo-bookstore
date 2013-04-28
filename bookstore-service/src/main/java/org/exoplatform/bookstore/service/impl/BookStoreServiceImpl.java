@@ -156,7 +156,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
       sessionProvider.close();
     }
 
-    return new ArrayList<Book>();
+    return list;
   }
 
   @Override
@@ -237,13 +237,19 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
         // Add Categories to repository
         Category cate = new Category("Novel");
         categoryNode = categoriesNode.addNode(cate.getId(), EXO_CATEGORY);
-        categoriesNode.setProperty(EXO_LBL_CATEGORY, cate.getLblCategory());
+        //categoryNode.setProperty(EXO_LBL_CATEGORY, cate.getLblCategory());
         System.out.println("categoryNode Node: '" + categoryNode.getPath());
         System.out.println("categoryNode Name: '" + categoryNode.getName());
         
         cate = new Category("Story");
-        categoryNode = categoriesNode.addNode(cate.getId(), EXO_CATEGORY);
-        categoryNode.setProperty(EXO_LBL_CATEGORY, cate.getLblCategory());
+        //categoryNode = categoriesNode.addNode(cate.getId(), EXO_CATEGORY);
+        //categoryNode.setProperty(EXO_LBL_CATEGORY, cate.getLblCategory());
+        
+        //add Book
+        Node bookNode = categoryNode.addNode(new Book().getId(), EXO_BOOK);
+        bookNode.setProperty(EXO_TITLE, "Title first");
+        bookNode.setProperty(EXO_ISBN, "ISBN XXX");
+        bookNode.setProperty(EXO_PUBLISHER, "Publisher YYY");
       }
 
       // set parent path for insert book
@@ -274,7 +280,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
                                                                                  .getComponentInstanceOfType(RepositoryService.class);
     try {
       ManageableRepository repository = repositoryService.getCurrentRepository();
-      session = sessionProvider.getSession("portal-system", repository);
+      session = sessionProvider.getSession(DEFAULT_WORKSPACE_NAME, repository);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

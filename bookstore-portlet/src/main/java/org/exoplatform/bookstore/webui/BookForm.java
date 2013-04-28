@@ -76,6 +76,7 @@ public class BookForm extends UIForm {
     
     // Create Book category select box.
     categoryList = new ArrayList<SelectItemOption<String>>();
+    getCategories();
     
     // Add form input.
     addUIFormInput(new UIFormStringInput(TXT_TITLE, TXT_TITLE, null)
@@ -161,10 +162,13 @@ public class BookForm extends UIForm {
     this.getUIStringInput(TXT_PUBLISHER).setValue(book.getPublisher());
   }
   
-  
+  /**
+   * Load all Categories for combobox
+   * @return
+   */
   private List<Category> getCategories() {
     List<Category> list = new ArrayList<Category>();
-    if(categoryList != null){
+    if(categoryList != null && categoryList.size() == 0) {
       list = BookstoreUtils.getBookstoreService().getAllCategories();
       categoryList = new ArrayList<SelectItemOption<String>>();
       for(Category category : list){

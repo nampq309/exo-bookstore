@@ -42,7 +42,7 @@ public interface BookstoreNodeTypes {
   public static final String CATEGORY = "Category";
   
   //Properties types
-  public static final String EXO_LBL_CATEGORY = "exo:lblCategory";
+  public static final String EXO_LBL_CATEGORY = "exo:label";
   
   public static final String EXO_TITLE = "exo:title";
   
