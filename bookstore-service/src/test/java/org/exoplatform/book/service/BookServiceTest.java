@@ -67,6 +67,7 @@ public class BookServiceTest extends BaseTestCase {
 		book.setPublisher("Publisher of Book");
 		bookStoreService.insert(book);
 		tearDownPollList.add(book);
+		assertNotNull(bookStoreService.findById(book.getId()));
 	}
 	
 	
