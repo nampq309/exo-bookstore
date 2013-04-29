@@ -16,7 +16,6 @@
  */
 package org.exoplatform.bookstore.jcr.model;
 
-import org.exoplatform.bookstore.commons.Constants;
 import org.exoplatform.bookstore.service.api.BookstoreNodeTypes;
 import org.exoplatform.services.jcr.util.IdGenerator;
 
@@ -45,20 +44,6 @@ public class Book {
 	this.id = BookstoreNodeTypes.BOOK + IdGenerator.generate();
   }
   
-  public Book(String category, String isbn, String title, String publisher){
-    this.id = BookstoreNodeTypes.BOOK + IdGenerator.generate();
-    this.category = category;
-    //Set Category label
-    if(this.category.equals(Constants.CATEGORY_NOVEL_VALUE)){
-      this.lblCategory = Constants.CATEGORY_NOVEL;
-    } else if(this.category.equals(Constants.CATEGORY_STORY_VALUE)){
-      this.lblCategory = Constants.CATEGORY_STORY;
-    }
-    this.isbn = isbn;
-    this.title = title;
-    this.publisher = publisher;
-  }
-
   public String getId() {
     return id;
   }

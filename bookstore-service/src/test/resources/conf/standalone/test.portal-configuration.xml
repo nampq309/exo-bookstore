@@ -172,6 +172,7 @@
                     </field>
                   </object>
                 </value>
+                <!-- 
                 <value>
                   <object type="org.exoplatform.services.organization.OrganizationConfig$User">
                     <field  name="userName"><string>john</string></field>
@@ -256,6 +257,7 @@
                     </field>
                   </object>
                 </value>
+                 -->
               </collection>
             </field>
           </object>

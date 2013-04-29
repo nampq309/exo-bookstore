@@ -92,7 +92,7 @@
                   </object>
                 </value>
                 
-                <!--  -->
+                <!-- 
                  <value>               
                   <object type="org.exoplatform.services.jcr.ext.hierarchy.impl.HierarchyConfig$JcrPath">                 
                     <field  name="alias"><string>groupsPath</string></field>
@@ -152,7 +152,7 @@
                   </object>
                   
                 </value>
-                
+ -->                
               </collection>
             </field>
           </object>

@@ -16,26 +16,69 @@
  */
 package org.exoplatform.book.service;
 
-import org.exoplatform.book.base.BaseTestCase;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.exoplatform.book.base.BaseTestCase;
+import org.exoplatform.bookstore.jcr.model.Book;
+import org.exoplatform.bookstore.jcr.model.Category;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
+@FixMethodOrder(MethodSorters.JVM)
 public class BookServiceTest extends BaseTestCase {
 
-  @Override
-  public void setUp() throws Exception {
-    //
-    //begin();
-  }
+	private List<Book> tearDownPollList;
+	
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+		tearDownPollList = new ArrayList<Book>();
+	}
 
-  @Override
-  public void tearDown() throws Exception {
-    //
-    //end();
-  }
-  
-  public void testRuntest() {
-    System.out.println("Start run test");
-    assertEquals(true, true);
-  } 
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+	}
+	
+	/** 
+	 * Check Bookstore service is available or not
+	 * @throws Exception
+	 */
+	public void testBookstoreService() throws Exception {
+		assertNotNull(getBookStoreService());
+	}
+	
+	
+	public void testGetAllCategories() throws Exception {
+		System.out.println("Test getAllCategories() function ...");
+		for(Category category : bookStoreService.getAllCategories()){
+			System.out.println("Category id: '"+ category.getId());
+			System.out.println("Category label: '"+ category.getLblCategory());
+		}
+	}
+	
+	
+	public void testInsertBook() throws Exception {
+		Book book = new Book();
+		book.setCategory(categoryId);
+		book.setTitle("Title of Book");
+		book.setIsbn("ISBN of Book");
+		book.setPublisher("Publisher of Book");
+		bookStoreService.insert(book);
+		tearDownPollList.add(book);
+	}
+	
+	
+	/** Test findAll() */
+	public void testFindAll() throws Exception {
+		System.out.println("Test findAll() function ...");
+		for(Book b : bookStoreService.findAll()){
+			System.out.println("Book id: '"+ b.getId());
+			System.out.println("Book title: '"+ b.getTitle());
+			System.out.println("Book ISBN: '"+ b.getIsbn());
+			System.out.println("Book Publisher: '"+ b.getPublisher());
+		}
+	}
 
-  
 }

@@ -25,6 +25,13 @@
   <component>
     <key>org.exoplatform.bookstore.service.api.BookStoreService</key>
     <type>org.exoplatform.bookstore.service.impl.BookStoreServiceImpl</type>
+    <init-params>
+      <value-param>
+        <name>workspace</name>
+        <description>workspace name</description>
+        <value>portal-test</value>
+      </value-param>
+    </init-params>
   </component>
 
   <external-component-plugins>
@@ -37,7 +44,7 @@
         <values-param>
           <name>autoCreatedInNewRepository</name>
           <description>Node types configuration file</description>
-          <value>jar:/conf/standalone/bookstore-nodetypes.xml</value>
+          <value>jar:/conf/standalone/test-bookstore-nodetypes.xml</value>
         </values-param>
       </init-params>
     </component-plugin>

@@ -18,11 +18,16 @@ package org.exoplatform.bookstore.service.api;
 
 import java.util.List;
 
+import javax.jcr.Node;
+import javax.jcr.Session;
+
 import org.exoplatform.bookstore.jcr.model.Book;
 import org.exoplatform.bookstore.jcr.model.Category;
+import org.exoplatform.services.jcr.ext.common.SessionProvider;
 
 public interface BookStoreService {
-  
+	
+	
   /**
    * Method used to insert book.<br/> 
    * 
@@ -103,5 +108,17 @@ public interface BookStoreService {
    * @return All categories.
    */
   public List<Category> getAllCategories();
+  
+  /**
+	 * Gets the sesison.
+	 * 
+	 * @return the sesison
+	 * @throws Exception
+	 *             if Repository or RepositoryConfiguration occur exception
+	 */
+	public Session getSession(SessionProvider sessionProvider);
+	
+	
+	public Node getCategoriesHome(SessionProvider sessionProvider) throws Exception;
 
 }

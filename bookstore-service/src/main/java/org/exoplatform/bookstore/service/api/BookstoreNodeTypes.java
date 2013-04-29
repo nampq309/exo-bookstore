@@ -30,6 +30,8 @@ public interface BookstoreNodeTypes {
   //Book
   public static final String EXO_BOOK = "exo:book";
   
+  public static final String EXO_ID = "exo:id";
+  
   //Bookstore root Node
   public static final String BOOKSTORE = "Bookstore";
   
@@ -42,7 +44,7 @@ public interface BookstoreNodeTypes {
   public static final String CATEGORY = "Category";
   
   //Properties types
-  public static final String EXO_LBL_CATEGORY = "exo:label";
+  public static final String EXO_LBL_CATEGORY = "exo:categoryLabel";
   
   public static final String EXO_TITLE = "exo:title";
   

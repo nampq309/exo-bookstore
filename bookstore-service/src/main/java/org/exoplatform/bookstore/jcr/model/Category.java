@@ -23,6 +23,7 @@ public class Category {
   
   public Category(String lblCategory) {
     this.id = BookstoreNodeTypes.CATEGORY + IdGenerator.generate();
+    this.lblCategory = lblCategory;
   }
   
   private String id;
