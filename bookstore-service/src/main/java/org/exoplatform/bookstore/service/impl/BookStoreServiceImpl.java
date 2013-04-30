@@ -293,7 +293,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
 				System.out.println("categoriesNode Node: '" + categoriesNode.getPath());
 				System.out.println("categoriesNode Name: '" + categoriesNode.getName());
 
-				/*// Add Categories to repository
+				// Add the Categories to repository
 				Category cate = new Category("Novel");
 				Node categoryNode = categoriesNode.addNode(cate.getId(), EXO_CATEGORY);
 				categoryNode.setProperty(EXO_ID, cate.getId());
@@ -307,12 +307,6 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
 				categoryNode.setProperty(EXO_LBL_CATEGORY, cate.getLblCategory());
 				System.out.println("categoryNode2 Node: '" + categoryNode.getPath());
 				System.out.println("categoryNode2 Name: '" + categoryNode.getName());
-
-				// add Book
-				Node bookNode = categoryNode.addNode(new Book().getId(), EXO_BOOK);
-				bookNode.setProperty(EXO_TITLE, "Title first");
-				bookNode.setProperty(EXO_ISBN, "ISBN XXX");
-				bookNode.setProperty(EXO_PUBLISHER, "Publisher YYY");*/
 
 				// Do save the session
 				session.save();

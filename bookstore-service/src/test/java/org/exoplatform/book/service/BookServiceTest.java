@@ -41,7 +41,7 @@ public class BookServiceTest extends BaseTestCase {
 
 	@Override
 	public void tearDown() throws Exception {
-		for(Book b : tearDownPollList){
+		for(Book b : tearDownPollList) {
 			System.out.println("Remove book ...");
 			bookStoreService.deleteBook(b.getId());
 		}
@@ -68,11 +68,7 @@ public class BookServiceTest extends BaseTestCase {
 	
 	//Test insert Book function
 	public void testInsertBook() throws Exception {
-		Book book = new Book();
-		book.setCategory(categoryId);
-		book.setTitle("Title of Book");
-		book.setIsbn("ISBN of Book");
-		book.setPublisher("Publisher of Book");
+		Book book = getBook();
 		bookStoreService.insert(book);
 		tearDownPollList.add(book);
 		assertNotNull(bookStoreService.findById(book.getId()));
@@ -81,11 +77,7 @@ public class BookServiceTest extends BaseTestCase {
 	//Test update Book function
 	public void testUpdateBook() throws Exception {
 		//insert Book
-		Book book = new Book();
-		book.setCategory(categoryId);
-		book.setTitle("Title of Book");
-		book.setIsbn("ISBN of Book");
-		book.setPublisher("Publisher of Book");
+		Book book = getBook();
 		bookStoreService.insert(book);
 		
 		String bookId = book.getId();
@@ -96,6 +88,8 @@ public class BookServiceTest extends BaseTestCase {
 		book.setCategory(categoryIdUpdate);
 		bookStoreService.updateBook(book);
 		
+		tearDownPollList.add(book);
+		
 		result = bookStoreService.findById(bookId);
 		assertEquals(categoryIdUpdate, result.getCategory());
 	}
@@ -103,23 +97,22 @@ public class BookServiceTest extends BaseTestCase {
 	
 	/** Test findAll() */
 	public void testFindAll() throws Exception {
+		//insert Book
+		Book book = getBook();
+		bookStoreService.insert(book);
+		boolean isSuccess = false;
 		List<Book> bookList = bookStoreService.findAll();
-		for(Book b : bookList){
-			System.out.println("Book id: '"+ b.getId());
+		for(Book b : bookList) {
 			System.out.println("Book title: '"+ b.getTitle());
-			System.out.println("Book ISBN: '"+ b.getIsbn());
-			System.out.println("Book Publisher: '"+ b.getPublisher());
+			if(b.getId().equals(book.getId())) isSuccess = true;
 		}
-		assertTrue(bookList.size() > 0);
+		tearDownPollList.add(book);
+		assertTrue(isSuccess);
 	}
 	
 	/**Test deleteBook*/
 	public void testDeleteBook() throws Exception {
-		Book book = new Book();
-		book.setCategory(categoryId);
-		book.setTitle("Title of Book");
-		book.setIsbn("ISBN of Book");
-		book.setPublisher("Publisher of Book");
+		Book book = getBook();
 		bookStoreService.insert(book);
 		
 		//check insert is success
@@ -131,12 +124,13 @@ public class BookServiceTest extends BaseTestCase {
 		assertNull(bookStoreService.findById(book.getId()));
 	}
 	
-	public void testRemoveAll() throws Exception {
-		SessionProvider sessionProvider = SessionProvider.createSystemProvider();
-		Node homeNode = bookStoreService.getCategoriesHome(sessionProvider);
-		System.out.println("Home node path '"+ homeNode.getPath());
-		System.out.println("Home node name '"+ homeNode.getName());
-		
+	private Book getBook() {
+		Book book = new Book();
+		book.setCategory(categoryId);
+		book.setTitle("Title of Book");
+		book.setIsbn("ISBN of Book");
+		book.setPublisher("Publisher of Book");
+		return book;
 	}
-
+	
 }

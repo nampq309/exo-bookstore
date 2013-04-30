@@ -65,7 +65,7 @@ public abstract class BaseTestCase extends BaseExoTestCase {
 		try {
 			Session session = getSession(sessionProvider);
 			Node categoriesNode = bookStoreService.getCategoriesHome(sessionProvider);
-			if(!categoriesNode.hasNode(categoryId)) {
+			if(!categoriesNode.hasNode(categoryId) && !categoriesNode.hasNode(categoryIdUpdate)) {
 				System.out.println("Initial Bookstore Tree ...");
 				// Add Categories to repository
 				Node categoryNode = categoriesNode.addNode(categoryId, BookstoreNodeTypes.EXO_CATEGORY);
@@ -90,9 +90,16 @@ public abstract class BaseTestCase extends BaseExoTestCase {
 	private void removeCategories() throws Exception {
 		SessionProvider sessionProvider = SessionProvider.createSystemProvider();
 		try {
+			System.out.println("clear data");
 			Node homeNode = bookStoreService.getCategoriesHome(sessionProvider);
 			if(homeNode.hasNode(categoryId)){
 				homeNode.getNode(categoryId).remove();
+				homeNode.getNode(categoryIdUpdate).remove();
+			}
+			if(homeNode.isNew()){
+				homeNode.getSession().save();
+			} else {
+				homeNode.save();
 			}
 		} catch (Exception e) {
 		} finally {
