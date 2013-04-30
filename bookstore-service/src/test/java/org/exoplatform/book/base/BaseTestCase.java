@@ -30,6 +30,8 @@ public abstract class BaseTestCase extends BaseExoTestCase {
 	protected BookStoreService bookStoreService;
 	
 	protected String categoryId = "categoryIdOftest";
+	
+	protected String categoryIdUpdate = "categoryIdUpdate";
 
 	@Override
 	public void setUp() throws Exception {
@@ -61,16 +63,20 @@ public abstract class BaseTestCase extends BaseExoTestCase {
 		SessionProvider sessionProvider = SessionProvider.createSystemProvider();
 		// Initial structure of Nodes
 		try {
-			System.out.println("Initial Bookstore Tree ...");
 			Session session = getSession(sessionProvider);
 			Node categoriesNode = bookStoreService.getCategoriesHome(sessionProvider);
 			if(!categoriesNode.hasNode(categoryId)) {
+				System.out.println("Initial Bookstore Tree ...");
 				// Add Categories to repository
 				Node categoryNode = categoriesNode.addNode(categoryId, BookstoreNodeTypes.EXO_CATEGORY);
 				categoryNode.setProperty(BookstoreNodeTypes.EXO_ID, categoryId);
 				categoryNode.setProperty(BookstoreNodeTypes.EXO_LBL_CATEGORY, "Novel");
 				System.out.println("categoryNode Node: '" + categoryNode.getPath());
 				System.out.println("categoryNode Name: '" + categoryNode.getName());
+				//second Category
+				categoryNode = categoriesNode.addNode(categoryIdUpdate, BookstoreNodeTypes.EXO_CATEGORY);
+				categoryNode.setProperty(BookstoreNodeTypes.EXO_ID, categoryIdUpdate);
+				categoryNode.setProperty(BookstoreNodeTypes.EXO_LBL_CATEGORY, "Story");
 				// Do save the session
 				session.save();
 			}

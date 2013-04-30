@@ -77,26 +77,18 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
 		SessionProvider sProvider = SessionProvider.createSystemProvider();
 		Book book = null;
 		try {
-			QueryManager qm = getSession(sProvider).getWorkspace().getQueryManager();
-			StringBuffer queryString = new StringBuffer(EXO_JCR_ROOT);
-			queryString.append("//element(*,").append(EXO_BOOK).append(")").append("[fn:name() = '").append(id).append("']");
-			Query query = qm.createQuery(queryString.toString(), Query.XPATH);
-			QueryResult result = query.execute();
-			NodeIterator iter = result.getNodes();
-			if (iter.getSize() > 0){
-				Node bookNode = iter.nextNode();
-				Node parent = bookNode.getParent();
-				book = new Book();
-				book.setId(bookNode.getName());
-				book.setParentPath(parent.getPath());
-				book.setCategory(parent.getName());
-				book.setLblCategory(getProperty(parent, EXO_LBL_CATEGORY, ""));
-				book.setTitle(getProperty(bookNode, EXO_TITLE, ""));
-				book.setIsbn(getProperty(bookNode, EXO_ISBN, ""));
-				book.setPublisher(getProperty(bookNode, EXO_PUBLISHER, ""));
-			}
+			Node bookNode = getNodeById(sProvider, id, EXO_BOOK);
+			Node parent = bookNode.getParent();
+			book = new Book();
+			book.setId(bookNode.getName());
+			book.setParentPath(parent.getPath());
+			book.setCategory(parent.getName());
+			book.setLblCategory(getProperty(parent, EXO_LBL_CATEGORY, ""));
+			book.setTitle(getProperty(bookNode, EXO_TITLE, ""));
+			book.setIsbn(getProperty(bookNode, EXO_ISBN, ""));
+			book.setPublisher(getProperty(bookNode, EXO_PUBLISHER, ""));
 		} catch (Exception e) {
-			e.printStackTrace();
+			book = null;
 		} finally {
 			sProvider.close();
 		}
@@ -184,23 +176,70 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
 
 	@Override
 	public void updateBook(Book book) {
-
+		SessionProvider sProvider = SessionProvider.createSystemProvider();
+		try {
+			Node bookNode = getNodeById(sProvider, book.getId(), EXO_BOOK);
+			Session session = getSession(sProvider);
+			//Check if Category is changed
+			String curParent = bookNode.getParent().getName();
+			if(!book.getCategory().equals(curParent)) {
+				// move Book to new location on tree
+				Node parentNode = getNodeById(sProvider, book.getCategory(), EXO_CATEGORY);
+				System.out.println("[updateBook] Current path: "+bookNode.getPath());
+				System.out.println("[updateBook] new Parent path: "+ parentNode.getPath());
+				session.move(bookNode.getPath(), parentNode.getPath() + "/" + book.getId());
+				bookNode = parentNode.getNode(book.getId());
+			}
+			bookNode.setProperty(EXO_TITLE, book.getTitle());
+			bookNode.setProperty(EXO_ISBN, book.getIsbn());
+			bookNode.setProperty(EXO_PUBLISHER, book.getPublisher());
+			// Do save into repository
+			session.save();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("[updateBook] Update Book fail !!!");
+		} finally {
+			sProvider.close();
+		}
 	}
 
 	@Override
 	public void deleteBook(String id) {
-
+		SessionProvider sProvider = SessionProvider.createSystemProvider();
+		try {
+			Node bookNode = getNodeById(sProvider, id, EXO_BOOK);
+			Node parentNode = bookNode.getParent();
+			bookNode.remove();
+			if(parentNode.isNew()){
+				parentNode.getSession().save();
+			}else {
+				parentNode.save();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Remove Book fail !!!");
+		} finally {
+			sProvider.close();
+		}
 	}
 
 	@Override
 	public void deleteAll() {
-		// TODO Auto-generated method stub
-
+		SessionProvider sProvider = SessionProvider.createSystemProvider();
+		try {
+			Node categoriesHomeNode = getCategoriesHome(sProvider);
+			Session session = categoriesHomeNode.getSession();
+			categoriesHomeNode.remove();
+			session.save();
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			sProvider.close();
+		}
 	}
 
 	@Override
 	public boolean isExists(String isbn) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -358,6 +397,18 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
 		return value;
 	}
 
+	public Node getNodeById(SessionProvider sessionProvider, String id, String nodeType) throws Exception{
+		QueryManager qm = getSession(sessionProvider).getWorkspace().getQueryManager();
+		StringBuffer queryString = new StringBuffer(EXO_JCR_ROOT);
+		queryString.append("//element(*,").append(nodeType).append(")").append("[fn:name() = '").append(id).append("']");
+		Query query = qm.createQuery(queryString.toString(), Query.XPATH);
+		QueryResult result = query.execute();
+	    NodeIterator iter = result.getNodes();
+	    if (iter.getSize() > 0)
+	      return iter.nextNode();
+	    return null;
+	}
+	
 	@Override
 	public Node getCategoriesHome(SessionProvider sessionProvider) throws Exception{
 		Node rootNode = getSession(sessionProvider).getRootNode();
