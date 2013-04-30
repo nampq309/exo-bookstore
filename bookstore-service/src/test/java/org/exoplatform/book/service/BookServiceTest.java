@@ -19,12 +19,9 @@ package org.exoplatform.book.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jcr.Node;
-
 import org.exoplatform.book.base.BaseTestCase;
 import org.exoplatform.bookstore.jcr.model.Book;
 import org.exoplatform.bookstore.jcr.model.Category;
-import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
@@ -87,7 +84,6 @@ public class BookServiceTest extends BaseTestCase {
 		//update
 		book.setCategory(categoryIdUpdate);
 		bookStoreService.updateBook(book);
-		
 		tearDownPollList.add(book);
 		
 		result = bookStoreService.findById(bookId);

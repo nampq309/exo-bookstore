@@ -1,20 +1,14 @@
 package org.exoplatform.book.base;
 
 import javax.jcr.Node;
-import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
-import org.exoplatform.bookstore.jcr.model.Book;
-import org.exoplatform.bookstore.jcr.model.Category;
 import org.exoplatform.bookstore.service.api.BookStoreService;
 import org.exoplatform.bookstore.service.api.BookstoreNodeTypes;
 import org.exoplatform.commons.testing.BaseExoTestCase;
 import org.exoplatform.component.test.ConfigurationUnit;
 import org.exoplatform.component.test.ConfiguredBy;
 import org.exoplatform.component.test.ContainerScope;
-import org.exoplatform.container.ExoContainerContext;
-import org.exoplatform.services.jcr.RepositoryService;
-import org.exoplatform.services.jcr.core.ManageableRepository;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 
 @ConfiguredBy({
@@ -65,21 +59,24 @@ public abstract class BaseTestCase extends BaseExoTestCase {
 		try {
 			Session session = getSession(sessionProvider);
 			Node categoriesNode = bookStoreService.getCategoriesHome(sessionProvider);
-			if(!categoriesNode.hasNode(categoryId) && !categoriesNode.hasNode(categoryIdUpdate)) {
+			if(!categoriesNode.hasNode(categoryId)) {
 				System.out.println("Initial Bookstore Tree ...");
-				// Add Categories to repository
+				// Add first category to repository
 				Node categoryNode = categoriesNode.addNode(categoryId, BookstoreNodeTypes.EXO_CATEGORY);
 				categoryNode.setProperty(BookstoreNodeTypes.EXO_ID, categoryId);
 				categoryNode.setProperty(BookstoreNodeTypes.EXO_LBL_CATEGORY, "Novel");
 				System.out.println("categoryNode Node: '" + categoryNode.getPath());
 				System.out.println("categoryNode Name: '" + categoryNode.getName());
+			} else if (!categoriesNode.hasNode(categoryIdUpdate)) {
 				//second Category
-				categoryNode = categoriesNode.addNode(categoryIdUpdate, BookstoreNodeTypes.EXO_CATEGORY);
+				Node categoryNode = categoriesNode.addNode(categoryIdUpdate, BookstoreNodeTypes.EXO_CATEGORY);
 				categoryNode.setProperty(BookstoreNodeTypes.EXO_ID, categoryIdUpdate);
 				categoryNode.setProperty(BookstoreNodeTypes.EXO_LBL_CATEGORY, "Story");
-				// Do save the session
-				session.save();
+				System.out.println("categoryNode Node: '" + categoryNode.getPath());
+				System.out.println("categoryNode Name: '" + categoryNode.getName());
 			}
+			// Do save the session
+			session.save();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -90,7 +87,7 @@ public abstract class BaseTestCase extends BaseExoTestCase {
 	private void removeCategories() throws Exception {
 		SessionProvider sessionProvider = SessionProvider.createSystemProvider();
 		try {
-			System.out.println("clear data");
+			System.out.println("Clear data ...");
 			Node homeNode = bookStoreService.getCategoriesHome(sessionProvider);
 			if(homeNode.hasNode(categoryId)){
 				homeNode.getNode(categoryId).remove();
