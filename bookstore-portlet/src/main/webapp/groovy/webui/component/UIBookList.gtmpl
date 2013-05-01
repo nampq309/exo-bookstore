@@ -6,7 +6,8 @@ import org.exoplatform.webui.core.UIPopupWindow;
 %>  
 <h1><center>Welcome to eXo Bookstore Portlet</center></h1>
 <% uiform.begin() %>
-<button type="button" title="Save" id="saveButton" onclick="<%=uicomponent.event("Create")%>" >Create</button>
+<button type="button" title="New Category" id="newCategory" onclick="<%=uicomponent.event("NewCategory")%>" >New Category</button>
+<button type="button" title="Create Book" id="newBook" onclick="<%=uicomponent.event("NewBook")%>" >New Book</button>
 <table border="1">
 <tr>
 <td>Category</td>

@@ -66,7 +66,7 @@ public class BookServiceTest extends BaseTestCase {
 	//Test insert Book function
 	public void testInsertBook() throws Exception {
 		Book book = getBook();
-		bookStoreService.insert(book);
+		bookStoreService.insertBook(book);
 		tearDownPollList.add(book);
 		assertNotNull(bookStoreService.findById(book.getId()));
 	}
@@ -75,7 +75,7 @@ public class BookServiceTest extends BaseTestCase {
 	public void testUpdateBook() throws Exception {
 		//insert Book
 		Book book = getBook();
-		bookStoreService.insert(book);
+		bookStoreService.insertBook(book);
 		
 		String bookId = book.getId();
 		Book result = bookStoreService.findById(bookId);
@@ -95,7 +95,7 @@ public class BookServiceTest extends BaseTestCase {
 	public void testFindAll() throws Exception {
 		//insert Book
 		Book book = getBook();
-		bookStoreService.insert(book);
+		bookStoreService.insertBook(book);
 		boolean isSuccess = false;
 		List<Book> bookList = bookStoreService.findAll();
 		for(Book b : bookList) {
@@ -109,7 +109,7 @@ public class BookServiceTest extends BaseTestCase {
 	/**Test deleteBook*/
 	public void testDeleteBook() throws Exception {
 		Book book = getBook();
-		bookStoreService.insert(book);
+		bookStoreService.insertBook(book);
 		
 		//check insert is success
 		assertNotNull(bookStoreService.findById(book.getId()));

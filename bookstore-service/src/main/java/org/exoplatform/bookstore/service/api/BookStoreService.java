@@ -27,14 +27,21 @@ import org.exoplatform.services.jcr.ext.common.SessionProvider;
 
 public interface BookStoreService {
 	
-	
+  /**
+   * Insert new Category 	
+   * @param category
+   * @return
+   */
+  public Category insertCategory(Category category);
+  
+  
   /**
    * Method used to insert book.<br/> 
    * 
    * @param book
    * @return Book inserted.
    */
-  public Book insert(Book book);
+  public Book insertBook(Book book);
   
   /**
    * Method used to find book by id.<br/>

@@ -37,7 +37,8 @@ import org.exoplatform.webui.form.UIForm;
  lifecycle = UIFormLifecycle.class,
  template = "app:/groovy/webui/component/UIBookList.gtmpl",
  events = {
-   @EventConfig(listeners = UIBookList.CreateActionListener.class, phase = Phase.DECODE),
+   @EventConfig(listeners = UIBookList.NewCategoryActionListener.class, phase = Phase.DECODE),
+   @EventConfig(listeners = UIBookList.NewBookActionListener.class, phase = Phase.DECODE),
    @EventConfig(listeners = UIBookList.EditActionListener.class, phase = Phase.DECODE),
    @EventConfig(listeners = UIBookList.ViewActionListener.class, phase = Phase.DECODE),
    @EventConfig(listeners = UIBookList.DeleteActionListener.class, confirm = "Are you sure to delete this book?")
@@ -52,11 +53,7 @@ public class UIBookList extends UIForm {
   public static List<Book> bookList = new ArrayList<Book>();
   
   public static List<Book> getBookList() {
-    //SET META DATA just for Test purpose
     if(bookList.size() > 0) {
-      //bookList.add(new Book("id1", "Story", "ISBN XXX", "Story 1", "NXB Tuoi tre"));
-      //bookList.add(new Book("id2", "Story", "ISBN YYY", "Story 2", "NXB Tuoi tre"));
-      //bookList.add(new Book("id3", "Story", "ISBN ZZZ", "Story 3", "NXB Tuoi tre"));
       return bookList;
     }
     return BookstoreUtils.getBookstoreService().findAll();
@@ -64,15 +61,25 @@ public class UIBookList extends UIForm {
   
   
   /**
+   * Listens to create new Category
+   *
+   */
+  public static class NewCategoryActionListener extends EventListener<UIBookList> {
+    @Override
+    public void execute(Event<UIBookList> event) throws Exception {
+      UIBookList form = event.getSource();
+      CategoryForm categoryForm = form.createUIComponent(CategoryForm.class, null, null);
+      form.setUIComponentForPopupWindow(form, categoryForm);
+    }
+  }
+  
+  /**
    * Listens to create new Book
    *
    */
-  public static class CreateActionListener extends EventListener<UIBookList> {
+  public static class NewBookActionListener extends EventListener<UIBookList> {
     @Override
     public void execute(Event<UIBookList> event) throws Exception {
-      WebuiRequestContext ctx = event.getRequestContext();
-      String bookId = ctx.getRequestParameter("objectId");
-      System.out.println("Get BookId: "+ bookId);
       UIBookList form = event.getSource();
       BookForm bookForm = form.createUIComponent(BookForm.class, null, null);
       bookForm.setCreate(true);
