@@ -2,21 +2,20 @@
  * Copyright (C) 2003-2013 eXo Platform SAS.
  *
  * This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Affero General Public License
-* as published by the Free Software Foundation; either version 3
-* of the License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, see<http://www.gnu.org/licenses/>.
+ * modify it under the terms of the GNU Affero General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see<http://www.gnu.org/licenses/>.
  */
 package org.exoplatform.bookstore.webui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.exoplatform.bookstore.BookstoreUtils;
@@ -29,45 +28,45 @@ import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.UIPopupWindow;
 import org.exoplatform.webui.core.lifecycle.UIFormLifecycle;
 import org.exoplatform.webui.event.Event;
-import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.event.Event.Phase;
+import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.form.UIForm;
 import org.exoplatform.webui.form.UIFormStringInput;
 
 @ComponentConfig(
- lifecycle = UIFormLifecycle.class,
- template = "app:/groovy/webui/component/UIBookList.gtmpl",
- events = {
-   @EventConfig(listeners = UIBookList.SearchBookActionListener.class, phase = Phase.DECODE),
-   @EventConfig(listeners = UIBookList.NewCategoryActionListener.class, phase = Phase.DECODE),
-   @EventConfig(listeners = UIBookList.NewBookActionListener.class, phase = Phase.DECODE),
-   @EventConfig(listeners = UIBookList.EditActionListener.class, phase = Phase.DECODE),
-   @EventConfig(listeners = UIBookList.ViewActionListener.class, phase = Phase.DECODE),
-   @EventConfig(listeners = UIBookList.DeleteActionListener.class, confirm = "Are you sure to delete this book?")
- }
+  lifecycle = UIFormLifecycle.class,
+  template = "app:/groovy/webui/component/UIBookList.gtmpl",
+  events = {
+    @EventConfig(listeners = UIBookList.SearchBookActionListener.class, phase = Phase.DECODE),
+    @EventConfig(listeners = UIBookList.NewCategoryActionListener.class, phase = Phase.DECODE),
+    @EventConfig(listeners = UIBookList.NewBookActionListener.class, phase = Phase.DECODE),
+    @EventConfig(listeners = UIBookList.EditActionListener.class, phase = Phase.DECODE),
+    @EventConfig(listeners = UIBookList.ViewActionListener.class, phase = Phase.DECODE),
+    @EventConfig(listeners = UIBookList.DeleteActionListener.class, confirm = "Are you sure to delete this book?")
+  }
 )
 public class UIBookList extends UIForm {
-  
+
   public static final String TXT_BOOK_SEARCH = "txtBookSearch";
-  
+
   public static final String LBL_BOOK_SEARCH = "Search by Title of book";
-  
+
   public UIBookList() throws Exception {
     addUIFormInput(new UIFormStringInput(TXT_BOOK_SEARCH,null, null));
     UIPopupWindow popup = addChild(UIPopupWindow.class, null, null);
     popup.setRendered(false);
     addChild(popup);
   }
-  
+
   public static List<Book> bookList = null;
-  
+
   public static List<Book> getBookList() {
     if (bookList != null) {
       return bookList;
     }
     return BookstoreUtils.getBookstoreService().findAll();
   }
-  
+
   /**
    * Listens to search book by title
    *
@@ -90,7 +89,7 @@ public class UIBookList extends UIForm {
       }
     }
   }
-  
+
   /**
    * Listens to create new Category
    *
@@ -103,7 +102,7 @@ public class UIBookList extends UIForm {
       form.setUIComponentForPopupWindow(form, categoryForm);
     }
   }
-  
+
   /**
    * Listens to create new Book
    *
@@ -137,7 +136,7 @@ public class UIBookList extends UIForm {
       form.setUIComponentForPopupWindow(form, bookForm);
     }
   }
-  
+
   /**
    * Listens to view a Book item
    *
@@ -158,7 +157,7 @@ public class UIBookList extends UIForm {
       form.setUIComponentForPopupWindow(form, bookFormViewer);
     }
   }
-  
+
   /**
    * Listens to delete a Book item
    *
@@ -172,7 +171,8 @@ public class UIBookList extends UIForm {
       BookstoreUtils.getBookstoreService().deleteBook(bookId);
     }
   }
-  
+
+  /**Set content for UIPopupWindow */
   private void setUIComponentForPopupWindow(UIBookList form, UIComponent uiComponent) throws Exception {
     UIPopupWindow popup = form.getChild(UIPopupWindow.class);
     if(popup == null) {
@@ -184,5 +184,5 @@ public class UIBookList extends UIForm {
     popup.setRendered(true);
     popup.setShow(true);
   }
-  
+
 }

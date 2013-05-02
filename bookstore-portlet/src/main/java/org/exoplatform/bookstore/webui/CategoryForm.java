@@ -33,14 +33,14 @@ import org.exoplatform.webui.form.validator.SpecialCharacterValidator;
 import org.exoplatform.webui.form.validator.StringLengthValidator;
 
 @ComponentConfig(
-		 lifecycle = UIFormLifecycle.class,
-		 template = "system:/groovy/webui/form/UIForm.gtmpl",
-		 events = {
-		   @EventConfig(listeners = CategoryForm.SaveActionListener.class),
-		   @EventConfig(listeners = CategoryForm.ResetActionListener.class, phase = Phase.DECODE),
-		   @EventConfig(listeners = CategoryForm.CancelActionListener.class, phase = Phase.DECODE)
-		 } 
-		)
+  lifecycle = UIFormLifecycle.class,
+  template = "system:/groovy/webui/form/UIForm.gtmpl",
+  events = {
+    @EventConfig(listeners = CategoryForm.SaveActionListener.class),
+    @EventConfig(listeners = CategoryForm.ResetActionListener.class, phase = Phase.DECODE),
+    @EventConfig(listeners = CategoryForm.CancelActionListener.class, phase = Phase.DECODE)
+  } 
+)
 public class CategoryForm extends UIForm {
 	
 	public final String TXT_CATEGORY_LBL = "txtCategoryLabel";
@@ -49,33 +49,30 @@ public class CategoryForm extends UIForm {
 	
 	public CategoryForm() throws Exception {
 		
-		UIFormStringInput txtCategory = new UIFormStringInput(TXT_CATEGORY_LBL, CATEGORY_LBL, null);
-		txtCategory.setLabel(CATEGORY_LBL);
-		// Add form input.
-	    addUIFormInput(txtCategory
-	                   .addValidator(MandatoryValidator.class)
-	                   .addValidator(SpecialCharacterValidator.class)
-	                   .addValidator(StringLengthValidator.class, 5, 50));
-	    
-	    setActions(new String[]{"Save","Reset","Cancel"});
-	    
-	    setSubmitAction("Save");
-		
+	  UIFormStringInput txtCategory = new UIFormStringInput(TXT_CATEGORY_LBL, CATEGORY_LBL, null);
+	  txtCategory.setLabel(CATEGORY_LBL);
+	  // Add form input.
+	  addUIFormInput(txtCategory
+	                 .addValidator(MandatoryValidator.class)
+	                 .addValidator(SpecialCharacterValidator.class)
+	                 .addValidator(StringLengthValidator.class, 5, 50));
+
+	  setActions(new String[]{"Save","Reset","Cancel"});
+	  setSubmitAction("Save");
 	}
 	
 	/**
 	 * Listens to create/update Category
-	 *
 	 */
 	public static class SaveActionListener extends EventListener<CategoryForm> {
-		@Override
-		public void execute(Event<CategoryForm> event) throws Exception {
-			CategoryForm form = event.getSource();
-			Category category = new Category(form.getUIStringInput(form.TXT_CATEGORY_LBL).getValue());
-			BookstoreUtils.getBookstoreService().insertCategory(category);
-			//close the window
-			form.close(form.getParent());
-		}
+	  @Override
+	  public void execute(Event<CategoryForm> event) throws Exception {
+	    CategoryForm form = event.getSource();
+	    Category category = new Category(form.getUIStringInput(form.TXT_CATEGORY_LBL).getValue());
+	    BookstoreUtils.getBookstoreService().insertCategory(category);
+	    //close the window
+	    form.close(form.getParent());
+	  }
 	}
 	
 	public static class ResetActionListener extends EventListener<CategoryForm> {

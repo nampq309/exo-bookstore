@@ -443,6 +443,11 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
     return category;
   }
   
+  /**
+   * Get the org.exoplatform.services.jcr.ext.app.ThreadLocalSessionProviderService
+   * Always use null for the key 
+   * @return
+   */
   private SessionProvider getSystemProviderService() {
     SessionProviderService sessionProviderService = (SessionProviderService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(SessionProviderService.class);
     return sessionProviderService.getSystemSessionProvider(null);
