@@ -7,14 +7,14 @@
 		</layout>
 	</appender>
 	<appender name="FA_DEBUG" class="org.apache.log4j.FileAppender">
-		<param name="File" value="logs/bookstore-service-debug.log" />
+		<param name="File" value="../logs/bookstore-service-debug.log" />
 		<param name="Threshold" value="DEBUG" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-4r [%t] %-5p %c %x - %m%n" />
 		</layout>
 	</appender>
 	<appender name="FA_ERROR" class="org.apache.log4j.FileAppender">
-		<param name="File" value="logs/bookstore-service-error.log" />
+		<param name="File" value="../logs/bookstore-service-error.log" />
 		<param name="Threshold" value="ERROR" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-4r [%t] %-5p %c %x - %m%n" />

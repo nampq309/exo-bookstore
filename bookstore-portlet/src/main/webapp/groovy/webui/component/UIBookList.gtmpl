@@ -18,11 +18,11 @@ import org.exoplatform.bookstore.webui.UIBookList;
 </div>
 <table border="1">
 <tr>
-<td>Category</td>
-<td>Title</td>
-<td>ISBN</td>
-<td>Publisher</td>
-<td>Actions</td>
+<td class="UITableHeader">Category</td>
+<td class="UITableHeader">Title</td>
+<td class="UITableHeader">ISBN</td>
+<td class="UITableHeader">Publisher</td>
+<td class="UITableHeader">Actions</td>
 </tr>
 
     <%
