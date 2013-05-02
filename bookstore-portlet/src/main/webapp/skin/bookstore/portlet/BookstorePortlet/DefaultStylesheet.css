@@ -34,3 +34,20 @@
 	font-size: 14px;
 	font-style: italic;
 }
+
+.SpaceSearchIcon {
+  padding: 1px 5px;
+  background: white url( "DefaultSkin/background/SearchIcon.gif" ) no-repeat right center;
+}
+
+.SearchContent {
+  float: left; 
+  border: 1px solid rgb(161, 161, 161); 
+  background: none repeat scroll 0% 0% white; 
+  height: 19px; 
+  margin: 8px; 
+  width: 175px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}

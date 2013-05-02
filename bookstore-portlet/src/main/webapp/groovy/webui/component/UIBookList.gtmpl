@@ -1,13 +1,21 @@
 <%
 import org.exoplatform.webui.core.UIPopupWindow;
+import org.exoplatform.bookstore.webui.UIBookList;
 
   def bookList = uicomponent.getBookList();
   
 %>  
 <h1><center>Welcome to eXo Bookstore Portlet</center></h1>
 <% uiform.begin() %>
+			<div class="uiSearchBookForm">
+			   <label class="uiLabel"><%=uicomponent.LBL_BOOK_SEARCH %></label>
+		     <%uiform.renderField(uicomponent.getChildren().get(0)); %>
+		     <button type="button" title="Search Book" id="searchBook" onclick="<%=uicomponent.event("SearchBook")%>" >Search</button>
+		   </div>
+<div class ="uiAction">
 <button type="button" title="New Category" id="newCategory" onclick="<%=uicomponent.event("NewCategory")%>" >New Category</button>
 <button type="button" title="Create Book" id="newBook" onclick="<%=uicomponent.event("NewBook")%>" >New Book</button>
+</div>
 <table border="1">
 <tr>
 <td>Category</td>
@@ -42,7 +50,5 @@ import org.exoplatform.webui.core.UIPopupWindow;
     
 </table>
 <% uiform.end() %>
+<div class="UIPopupBookForm"><% uicomponent.renderChild(UIPopupWindow.class) %></div>
 
-<div>
-<% uicomponent.renderChildren(); %>
-</div>

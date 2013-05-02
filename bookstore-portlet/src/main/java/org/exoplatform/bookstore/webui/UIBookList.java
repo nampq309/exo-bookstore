@@ -32,11 +32,13 @@ import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.event.Event.Phase;
 import org.exoplatform.webui.form.UIForm;
+import org.exoplatform.webui.form.UIFormStringInput;
 
 @ComponentConfig(
  lifecycle = UIFormLifecycle.class,
  template = "app:/groovy/webui/component/UIBookList.gtmpl",
  events = {
+   @EventConfig(listeners = UIBookList.SearchBookActionListener.class, phase = Phase.DECODE),
    @EventConfig(listeners = UIBookList.NewCategoryActionListener.class, phase = Phase.DECODE),
    @EventConfig(listeners = UIBookList.NewBookActionListener.class, phase = Phase.DECODE),
    @EventConfig(listeners = UIBookList.EditActionListener.class, phase = Phase.DECODE),
@@ -46,19 +48,48 @@ import org.exoplatform.webui.form.UIForm;
 )
 public class UIBookList extends UIForm {
   
+  public static final String TXT_BOOK_SEARCH = "txtBookSearch";
+  
+  public static final String LBL_BOOK_SEARCH = "Search by Title of book";
+  
   public UIBookList() throws Exception {
-
+    addUIFormInput(new UIFormStringInput(TXT_BOOK_SEARCH,null, null));
+    UIPopupWindow popup = addChild(UIPopupWindow.class, null, null);
+    popup.setRendered(false);
+    addChild(popup);
   }
   
-  public static List<Book> bookList = new ArrayList<Book>();
+  public static List<Book> bookList = null;
   
   public static List<Book> getBookList() {
-    if(bookList.size() > 0) {
+    if (bookList != null) {
       return bookList;
     }
     return BookstoreUtils.getBookstoreService().findAll();
   }
   
+  /**
+   * Listens to search book by title
+   *
+   */
+  public static class SearchBookActionListener extends EventListener<UIBookList> {
+    @Override
+    public void execute(Event<UIBookList> event) throws Exception {
+      UIBookList uiBookList = event.getSource();
+      UIFormStringInput txtSearch = uiBookList.getUIStringInput(TXT_BOOK_SEARCH);
+      if(txtSearch != null){
+        String title = txtSearch.getValue();
+        System.out.println("Get text of search: '"+title);
+        if(title != null && title != "")
+          bookList = BookstoreUtils.getBookstoreService().findByTitle(title);
+        else 
+          bookList = BookstoreUtils.getBookstoreService().findAll();
+        event.getRequestContext().addUIComponentToUpdateByAjax(uiBookList);
+      }else {
+        System.out.println("Couldn't find the text search input !!!");
+      }
+    }
+  }
   
   /**
    * Listens to create new Category
@@ -146,9 +177,9 @@ public class UIBookList extends UIForm {
     UIPopupWindow popup = form.getChild(UIPopupWindow.class);
     if(popup == null) {
       popup = form.addChild(UIPopupWindow.class, null, null);
-      popup.setWindowSize(400, 250);
       form.addChild(popup);
     }
+    popup.setWindowSize(400, 250);
     popup.setUIComponent(uiComponent);
     popup.setRendered(true);
     popup.setShow(true);
