@@ -120,16 +120,17 @@ public class BookServiceTest extends BaseTestCase {
 	  book2.setPublisher("NXB DN");
 	  
 	  bookStoreService.insertBook(book2);
-	  
-	  boolean isSuccess = false;
+	  boolean foundBook1 = false;
+	  boolean foundBook2 = false;
 	  List<Book> bookList = bookStoreService.findByTitle("Story");
 	  for(Book b : bookList) {
       System.out.println("Book title: '"+ b.getTitle());
-      if(b.getId().equals(book2.getId())) isSuccess = true;
+      if(b.getId().equals(book1.getId())) foundBook1 = true;
+      if(b.getId().equals(book2.getId())) foundBook2 = true;
     }
 	  tearDownPollList.add(book1);
     tearDownPollList.add(book2);
-    assertTrue(isSuccess);
+    assertTrue(!foundBook1 && foundBook2);
 	}
 	
 	/**Test deleteBook*/
