@@ -106,6 +106,32 @@ public class BookServiceTest extends BaseTestCase {
 		assertTrue(isSuccess);
 	}
 	
+	/**Test findByTitle function */
+	public void testFindByTitle() throws Exception {
+	  //insert Book with title 'Title of Book'
+	  Book book1 = getBook();
+	  bookStoreService.insertBook(book1);
+	  
+	  //insert Book with title 'Story of Mr.G'
+	  Book book2 = new Book();
+	  book2.setTitle("Story of Mr.G");
+	  book2.setCategory(categoryId);
+	  book2.setIsbn("ISBN of Story");
+	  book2.setPublisher("NXB DN");
+	  
+	  bookStoreService.insertBook(book2);
+	  
+	  boolean isSuccess = false;
+	  List<Book> bookList = bookStoreService.findByTitle("Story");
+	  for(Book b : bookList) {
+      System.out.println("Book title: '"+ b.getTitle());
+      if(b.getId().equals(book2.getId())) isSuccess = true;
+    }
+	  tearDownPollList.add(book1);
+    tearDownPollList.add(book2);
+    assertTrue(isSuccess);
+	}
+	
 	/**Test deleteBook*/
 	public void testDeleteBook() throws Exception {
 		Book book = getBook();

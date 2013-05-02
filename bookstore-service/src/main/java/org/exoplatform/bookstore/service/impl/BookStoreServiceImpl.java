@@ -108,7 +108,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
 		SessionProvider sessionProvider = SessionProvider.createSystemProvider();
 		List<Book> list = new ArrayList<Book>();
 		try {
-			String strQuery = "//element(*, " + EXO_BOOK + ") jcr:like(@"+ EXO_TITLE + ",'%" + title + "%')";
+			String strQuery = "//element(*, " + EXO_BOOK + ") [jcr:like(@"+ EXO_TITLE + ",'%" + title + "%')]";
 			QueryManager qm = getSession(sessionProvider).getWorkspace().getQueryManager();
 			Query query = qm.createQuery(strQuery, Query.XPATH);
 			QueryImpl queryImpl = (QueryImpl) query;
@@ -134,7 +134,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
 			sessionProvider.close();
 		}
 
-		return null;
+		return list;
 	}
 
 	@Override
