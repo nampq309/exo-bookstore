@@ -78,7 +78,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
   @Override
   public Book findById(String id) {
     //Don't close this sessionProvider
-    SessionProvider sProvider = getSystemProviderService();
+    SessionProvider sProvider = getSessionProviderFromService();
     Book book = null;
     try {
       Node bookNode = getNodeById(sProvider, id, EXO_BOOK);
@@ -105,7 +105,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
   @Override
   public List<Book> findByTitle(String title) {
     //Don't close this sessionProvider
-    SessionProvider sessionProvider = getSystemProviderService();
+    SessionProvider sessionProvider = getSessionProviderFromService();
     List<Book> list = new ArrayList<Book>();
     try {
       String strQuery = "//element(*, " + EXO_BOOK + ") [jcr:like(@"+ EXO_TITLE + ",'%" + title + "%')]";
@@ -143,7 +143,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
   @Override
   public List<Book> findAll() {
     //Don't close this sessionProvider
-    SessionProvider sessionProvider = getSystemProviderService();
+    SessionProvider sessionProvider = getSessionProviderFromService();
     List<Book> list = new ArrayList<Book>();
     try {
       // Get all of Books by 'SELECT *' query
@@ -245,7 +245,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
 
   @Override
   public List<Category> getAllCategories() {
-    SessionProvider sessionProvider = SessionProvider.createSystemProvider();
+    SessionProvider sessionProvider = getSessionProviderFromService();
 
     List<Category> list = new ArrayList<Category>();
     try {
@@ -265,11 +265,8 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
         System.out.println("Add Category '" + cate.getLblCategory() + "to list");
         list.add(cate);
       }
-
     } catch (Exception e) {
       e.printStackTrace();
-    } finally {
-      sessionProvider.close();
     }
 
     return list;
@@ -448,7 +445,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
    * Always use null for the key 
    * @return
    */
-  private SessionProvider getSystemProviderService() {
+  private SessionProvider getSessionProviderFromService() {
     SessionProviderService sessionProviderService = (SessionProviderService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(SessionProviderService.class);
     return sessionProviderService.getSystemSessionProvider(null);
   }
