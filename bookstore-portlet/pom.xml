@@ -15,7 +15,7 @@
 	<version>1.0</version>
 	<name>Bookstore</name>
 	<description>Bookstore Portlet</description>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.gatein.portal</groupId>
@@ -25,10 +25,15 @@
 			<groupId>org.gatein.portal</groupId>
 			<artifactId>exo.portal.webui.eXo</artifactId>
 		</dependency>
-	<dependency>
-      <groupId>org.exoplatform.bookstore</groupId>
-      <artifactId>bookstore-service</artifactId>
-    </dependency>
+		<dependency>
+			<groupId>org.exoplatform.bookstore</groupId>
+			<artifactId>bookstore-service</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>Bookstore</finalName>

@@ -27,6 +27,7 @@ import javax.jcr.query.Query;
 import javax.jcr.query.QueryManager;
 import javax.jcr.query.QueryResult;
 
+import org.apache.log4j.Logger;
 import org.exoplatform.bookstore.jcr.model.Book;
 import org.exoplatform.bookstore.jcr.model.Category;
 import org.exoplatform.bookstore.service.api.BookStoreService;
@@ -47,6 +48,8 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
   public static final String WORKSPACE_PARAM = "workspace";
 
   public static final String DEFAULT_CATEGORY_ID = CATEGORY + "defaultCategory";
+  
+  Logger logger = Logger.getLogger(BookStoreServiceImpl.class);
 
   //workspace
   public String workspace;
@@ -68,7 +71,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
       // Do save into repository
       parentNode.getSession().save();
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     } finally {
       sessionProvider.close();
     }
@@ -129,7 +132,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
       }
 
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
 
     return list;
@@ -169,7 +172,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
         list.add(book);
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
     return list;
   }
@@ -185,8 +188,8 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
       if(!book.getCategory().equals(curParent)) {
         // move Book to new location on tree
         Node parentNode = getNodeById(sProvider, book.getCategory(), EXO_CATEGORY);
-        System.out.println("[updateBook] Current path: "+bookNode.getPath());
-        System.out.println("[updateBook] new Parent path: "+ parentNode.getPath());
+        logger.info("[updateBook] Current path: "+bookNode.getPath());
+        logger.info("[updateBook] new Parent path: "+ parentNode.getPath());
         session.move(bookNode.getPath(), parentNode.getPath() + "/" + book.getId());
         bookNode = parentNode.getNode(book.getId());
       }
@@ -196,8 +199,8 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
       // Do save into repository
       session.save();
     } catch (Exception e) {
-      e.printStackTrace();
-      System.out.println("[updateBook] Update Book fail !!!");
+      logger.error(e.getMessage());
+      logger.error("[updateBook] Update Book fail !!!");
     } finally {
       sProvider.close();
     }
@@ -216,8 +219,8 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
         parentNode.save();
       }
     } catch (Exception e) {
-      e.printStackTrace();
-      System.out.println("Remove Book fail !!!");
+      logger.error(e.getMessage());
+      logger.error("Remove Book fail !!!");
     } finally {
       sProvider.close();
     }
@@ -262,11 +265,11 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
         Node cateNode = nodeItr.nextNode();
         Category cate = new Category(getProperty(cateNode, EXO_LBL_CATEGORY, ""));
         cate.setId(cateNode.getName());
-        System.out.println("Add Category '" + cate.getLblCategory() + "to list");
+        logger.info("Add Category '" + cate.getLblCategory() + "to list");
         list.add(cate);
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     }
 
     return list;
@@ -281,14 +284,14 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
       Node rootNode = session.getRootNode();
       Node categoriesNode = null;
       if (!rootNode.hasNode(BOOKSTORE)) {
-        System.out.println("Initial Bookstore Tree ...");
+        logger.info("Initial Bookstore Tree ...");
         Node bookStoreNode = rootNode.addNode(BOOKSTORE, EXO_BOOKSTORE);
-        System.out.println("Bookstore Node: '" + bookStoreNode.getPath());
-        System.out.println("Bookstore Name: '" + bookStoreNode.getName());
+        logger.info("Bookstore Node: '" + bookStoreNode.getPath());
+        logger.info("Bookstore Name: '" + bookStoreNode.getName());
 
         categoriesNode = bookStoreNode.addNode(CATEGORIES, EXO_CATEGORIES);
-        System.out.println("categoriesNode Node: '" + categoriesNode.getPath());
-        System.out.println("categoriesNode Name: '" + categoriesNode.getName());
+        logger.info("categoriesNode Node: '" + categoriesNode.getPath());
+        logger.info("categoriesNode Name: '" + categoriesNode.getName());
 
       } else {
         categoriesNode = getCategoriesHome(sessionProvider);
@@ -298,8 +301,8 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
         // Add the default Category to Categories Home
         Category cate = new Category("Novel");
         Node categoryNode = categoriesNode.addNode(DEFAULT_CATEGORY_ID, EXO_CATEGORY);
-        System.out.println("categoryNode Node: '" + categoryNode.getPath());
-        System.out.println("categoryNode Name: '" + categoryNode.getName());
+        logger.info("categoryNode Node: '" + categoryNode.getPath());
+        logger.info("categoryNode Name: '" + categoryNode.getName());
         categoryNode.setProperty(EXO_ID, cate.getId());
         categoryNode.setProperty(EXO_LBL_CATEGORY, cate.getLblCategory());
       }
@@ -307,9 +310,9 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
       session.save();
 
     } catch (RepositoryException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     } finally {
       sessionProvider.close();
     }
@@ -336,7 +339,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
 
   @Override
   public void start() {
-    System.out.println("initializing Bookstore service...");
+    logger.info("initializing Bookstore service...");
     initialNodes();
   }
 
@@ -357,7 +360,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
     try {
       result = params.getValueParam(name).getValue();
     } catch (Exception e) {
-      System.out.println("No '" + name + "' value-param. Using default value: " + defaultValue);
+      logger.info("No '" + name + "' value-param. Using default value: " + defaultValue);
     }
 
     if (result == null) {
@@ -433,7 +436,7 @@ public class BookStoreServiceImpl implements BookStoreService, Startable, Bookst
       else
         parentNode.save();
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
     } finally {
       sessionProvider.close();
     }

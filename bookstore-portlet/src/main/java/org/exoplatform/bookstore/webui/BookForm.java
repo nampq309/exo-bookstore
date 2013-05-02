@@ -19,6 +19,7 @@ package org.exoplatform.bookstore.webui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.exoplatform.bookstore.BookstoreUtils;
 import org.exoplatform.bookstore.jcr.model.Book;
 import org.exoplatform.bookstore.jcr.model.Category;
@@ -43,14 +44,14 @@ import org.exoplatform.webui.form.validator.StringLengthValidator;
  * Add/Edit a Book
  */
 @ComponentConfig(
-                 lifecycle = UIFormLifecycle.class,
-                 template = "app:/groovy/webui/component/BookForm.gtmpl",
-                 events = {
-                   @EventConfig(listeners = BookForm.SaveActionListener.class),
-                   @EventConfig(listeners = BookForm.ResetActionListener.class, phase = Phase.DECODE),
-                   @EventConfig(listeners = BookForm.CancelActionListener.class, phase = Phase.DECODE)
-                 } 
-    )
+  lifecycle = UIFormLifecycle.class,
+  template = "app:/groovy/webui/component/BookForm.gtmpl",
+  events = {
+    @EventConfig(listeners = BookForm.SaveActionListener.class),
+    @EventConfig(listeners = BookForm.ResetActionListener.class, phase = Phase.DECODE),
+    @EventConfig(listeners = BookForm.CancelActionListener.class, phase = Phase.DECODE)
+  } 
+)
 public class BookForm extends UIForm {
 
   //Name of text Title
@@ -70,7 +71,7 @@ public class BookForm extends UIForm {
   private boolean isCreate = false;
 
   public List<SelectItemOption<String>> categoryList;
-
+  
   public BookForm() throws Exception {
 
     // Create Book category select box.

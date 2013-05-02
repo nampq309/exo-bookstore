@@ -19,6 +19,7 @@ package org.exoplatform.book.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.exoplatform.book.base.BaseTestCase;
 import org.exoplatform.bookstore.jcr.model.Book;
 import org.exoplatform.bookstore.jcr.model.Category;
@@ -27,6 +28,8 @@ import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class BookServiceTest extends BaseTestCase {
+  
+  Logger logger = Logger.getLogger(BaseTestCase.class);
 
 	private List<Book> tearDownPollList;
 	
@@ -39,7 +42,7 @@ public class BookServiceTest extends BaseTestCase {
 	@Override
 	public void tearDown() throws Exception {
 		for(Book b : tearDownPollList) {
-			System.out.println("Remove book ...");
+			logger.info("Remove book ...");
 			bookStoreService.deleteBook(b.getId());
 		}
 		super.tearDown();
@@ -57,8 +60,8 @@ public class BookServiceTest extends BaseTestCase {
 	public void testGetAllCategories() throws Exception {
 		List<Category> list = bookStoreService.getAllCategories();
 		for(Category category : list){
-			System.out.println("Category id: '"+ category.getId());
-			System.out.println("Category label: '"+ category.getLblCategory());
+			logger.info("Category id: '"+ category.getId());
+			logger.info("Category label: '"+ category.getLblCategory());
 		}
 		assertTrue(list.size()>0);
 	}
@@ -99,7 +102,7 @@ public class BookServiceTest extends BaseTestCase {
 		boolean isSuccess = false;
 		List<Book> bookList = bookStoreService.findAll();
 		for(Book b : bookList) {
-			System.out.println("Book title: '"+ b.getTitle());
+			logger.info("Book title: '"+ b.getTitle());
 			if(b.getId().equals(book.getId())) isSuccess = true;
 		}
 		tearDownPollList.add(book);
@@ -124,7 +127,7 @@ public class BookServiceTest extends BaseTestCase {
 	  boolean foundBook2 = false;
 	  List<Book> bookList = bookStoreService.findByTitle("Story");
 	  for(Book b : bookList) {
-      System.out.println("Book title: '"+ b.getTitle());
+      logger.info("Book title: '"+ b.getTitle());
       if(b.getId().equals(book1.getId())) foundBook1 = true;
       if(b.getId().equals(book2.getId())) foundBook2 = true;
     }

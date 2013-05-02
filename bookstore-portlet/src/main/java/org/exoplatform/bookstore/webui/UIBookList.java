@@ -18,6 +18,7 @@ package org.exoplatform.bookstore.webui;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.exoplatform.bookstore.BookstoreUtils;
 import org.exoplatform.bookstore.jcr.model.Book;
 import org.exoplatform.bookstore.service.api.BookStoreService;
@@ -50,6 +51,8 @@ public class UIBookList extends UIForm {
   public static final String TXT_BOOK_SEARCH = "txtBookSearch";
 
   public static final String LBL_BOOK_SEARCH = "Search by Title of book";
+  
+  static Logger logger = Logger.getLogger(UIBookList.class);
 
   public UIBookList() throws Exception {
     addUIFormInput(new UIFormStringInput(TXT_BOOK_SEARCH,null, null));
@@ -78,14 +81,14 @@ public class UIBookList extends UIForm {
       UIFormStringInput txtSearch = uiBookList.getUIStringInput(TXT_BOOK_SEARCH);
       if(txtSearch != null){
         String title = txtSearch.getValue();
-        System.out.println("Get text of search: '"+title);
+        logger.info("Get text of search: '"+title);
         if(title != null && title != "")
           bookList = BookstoreUtils.getBookstoreService().findByTitle(title);
         else 
           bookList = BookstoreUtils.getBookstoreService().findAll();
         event.getRequestContext().addUIComponentToUpdateByAjax(uiBookList);
       }else {
-        System.out.println("Couldn't find the text search input !!!");
+        logger.info("Couldn't find the text search input !!!");
       }
     }
   }
@@ -126,7 +129,7 @@ public class UIBookList extends UIForm {
     public void execute(Event<UIBookList> event) throws Exception {
       WebuiRequestContext ctx = event.getRequestContext();
       String bookId = ctx.getRequestParameter("objectId");
-      System.out.println("Get BookId: "+ bookId);
+      logger.info("Get BookId: "+ bookId);
       UIBookList form = event.getSource();
       BookForm bookForm = form.createUIComponent(BookForm.class, null, null);
       //TODO Set book's info
@@ -147,7 +150,7 @@ public class UIBookList extends UIForm {
     public void execute(Event<UIBookList> event) throws Exception {
       WebuiRequestContext ctx = event.getRequestContext();
       String bookId = ctx.getRequestParameter("objectId");
-      System.out.println("Get BookId: "+ bookId);
+      logger.info("Get BookId: "+ bookId);
       UIBookList form = event.getSource();
       BookFormViewer bookFormViewer = form.createUIComponent(BookFormViewer.class, null, null);
       //TODO Set book's info
